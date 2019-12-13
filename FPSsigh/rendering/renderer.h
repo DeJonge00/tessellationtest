@@ -24,15 +24,19 @@ public:
 
 private:
     void createShaderPrograms();
+    void createSimpleShaderProgram();
     void createBuffers();
+    void createSimpleBuffers();
     void updateBuffers();
-    void updateUniforms(QOpenGLShaderProgram *shaderProgram);
+    void updateSimpleBuffers();
+    void updateUniforms();
+    void updateSimpleUniforms();
 
+    void renderSimpleObjects(bool uniformUpdateRequired);
     void renderWorld();
-    void renderCharacter();
 
     // Shader programs
-    QOpenGLShaderProgram *mainShaderProgram;
+    QOpenGLShaderProgram *simpleShaderProgram;
 
     // Vertex array objects
     GLuint worldVAO;

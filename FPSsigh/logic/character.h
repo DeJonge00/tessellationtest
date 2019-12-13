@@ -21,6 +21,10 @@ private:
     float FoV;
     float dispRatio;
 
+    void updateModelMatrix();
+    void updateProjectionMatrix();
+    void updateNormalMatrix();
+
     void initView();
 };
 

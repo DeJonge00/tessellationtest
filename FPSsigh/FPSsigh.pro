@@ -22,7 +22,8 @@ SOURCES += \
     logic/worldobject.cpp \
     main.cpp \
     mainwindow.cpp \
-    rendering/renderer.cpp
+    rendering/renderer.cpp \
+    rendering/simpleobjectspipeline.cpp
 
 HEADERS += \
     gamewindow.h \
