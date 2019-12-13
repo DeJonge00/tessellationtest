@@ -80,10 +80,10 @@ WorldObject World::createCube(QVector3D location, float s) {
     vertices.append(QVector3D(x, y+s, z));
     vertices.append(QVector3D(x+s, y+s, z));
 
-    normals.append(QVector3D(0, 0, -1));
-    normals.append(QVector3D(0, 0, -1));
-    normals.append(QVector3D(0, 0, -1));
-    normals.append(QVector3D(0, 0, -1));
+    normals.append(QVector3D(-1, -1, -1));
+    normals.append(QVector3D(1, -1, -1));
+    normals.append(QVector3D(1, 1, -1));
+    normals.append(QVector3D(-1, 1, -1));
 
     // Top face
     vertices.append(QVector3D(x, y+s, z+s));
@@ -91,10 +91,10 @@ WorldObject World::createCube(QVector3D location, float s) {
     vertices.append(QVector3D(x+s, y+s, z));
     vertices.append(QVector3D(x, y+s, z));
 
-    normals.append(QVector3D(0, 1, 0));
-    normals.append(QVector3D(0, 1, 0));
-    normals.append(QVector3D(0, 1, 0));
-    normals.append(QVector3D(0, 1, 0));
+    normals.append(QVector3D(-1, 1, 1));
+    normals.append(QVector3D(1, 1, 1));
+    normals.append(QVector3D(1, 1, -1));
+    normals.append(QVector3D(-1, 1, -1));
 
     // Bottom Face
     vertices.append(QVector3D(x, y, z));
@@ -102,10 +102,10 @@ WorldObject World::createCube(QVector3D location, float s) {
     vertices.append(QVector3D(x+s, y, z+s));
     vertices.append(QVector3D(x, y, z+s));
 
-    normals.append(QVector3D(0, -1, 0));
-    normals.append(QVector3D(0, -1, 0));
-    normals.append(QVector3D(0, -1, 0));
-    normals.append(QVector3D(0, -1, 0));
+    normals.append(QVector3D(-1, -1, 1));
+    normals.append(QVector3D(1, -1, 1));
+    normals.append(QVector3D(1, -1, -1));
+    normals.append(QVector3D(-1, -1, -1));
 
     // Left face
     vertices.append(QVector3D(x, y, z));
@@ -113,10 +113,10 @@ WorldObject World::createCube(QVector3D location, float s) {
     vertices.append(QVector3D(x, y+s, z+s));
     vertices.append(QVector3D(x, y+s, z));
 
-    normals.append(QVector3D(-1, 0, 0));
-    normals.append(QVector3D(-1, 0, 0));
-    normals.append(QVector3D(-1, 0, 0));
-    normals.append(QVector3D(-1, 0, 0));
+    normals.append(QVector3D(-1, -1, -1));
+    normals.append(QVector3D(-1, -1, 1));
+    normals.append(QVector3D(-1, 1, 1));
+    normals.append(QVector3D(-1, 1, -1));
 
     // Right Face
     vertices.append(QVector3D(x+s, y, z+s));
@@ -124,10 +124,10 @@ WorldObject World::createCube(QVector3D location, float s) {
     vertices.append(QVector3D(x+s, y+s, z));
     vertices.append(QVector3D(x+s, y+s, z+s));
 
-    normals.append(QVector3D(1, 0, 0));
-    normals.append(QVector3D(1, 0, 0));
-    normals.append(QVector3D(1, 0, 0));
-    normals.append(QVector3D(1, 0, 0));
+    normals.append(QVector3D(1, -1, -1));
+    normals.append(QVector3D(1, -1, 1));
+    normals.append(QVector3D(1, 1, 1));
+    normals.append(QVector3D(1, 1, -1));
 
     return WorldObject(vertices, normals);
 }

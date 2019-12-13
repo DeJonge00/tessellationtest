@@ -5,7 +5,7 @@ layout(quads, equal_spacing, ccw) in;
 layout (location = 0) in vec3 vertcoords_world_tes[];
 layout (location = 1) in vec3 vertnormal_world_tes[];
 
-layout (location = 1) out vec3 vertnormal_world_fs;
+out vec3 vertnormal_world_geo;
 
 
 vec3 interpolate(vec3 v0, vec3 v1, float w) {
@@ -37,6 +37,7 @@ void main()
 
     p1 = mix(v1, v0, gl_TessCoord.x);
     p2 = mix(v2, v3, gl_TessCoord.x);
-    vertnormal_world_fs = mix(p1, p2, gl_TessCoord.y);
+    vec3 pr = mix(p1, p2, gl_TessCoord.y);
+    vertnormal_world_geo = pr;
 
 }
