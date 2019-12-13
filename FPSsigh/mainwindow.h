@@ -18,16 +18,15 @@ public:
 private slots:
     void on_pushButton_clicked();
     void on_fovSpinbox_valueChanged(int value);
-
-    void on_angleSpinbox_valueChanged(int value);
-
     void on_scaleSpinbox_valueChanged(int value);
 
     void on_positionX_valueChanged(double arg1);
-
     void on_positionY_valueChanged(double arg1);
-
     void on_positionZ_valueChanged(double arg1);
+
+    void on_viewPointX_valueChanged(double arg1);
+    void on_viewPointY_valueChanged(double arg1);
+    void on_viewPointZ_valueChanged(double arg1);
 
 private:
     Ui::MainWindow *ui;

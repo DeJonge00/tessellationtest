@@ -5,8 +5,10 @@
 #include "logic/character.h"
 #include "math.h"
 
-Character::Character(QVector3D pos)
-    : position(pos)
+# define PI 3.14159265358979323846
+
+Character::Character(QVector3D pos, QVector3D view)
+    : position(pos), eyeDirection(view)
 {
     initView();
 }
@@ -23,13 +25,14 @@ void Character::updateModelMatrix() {
     modelViewMatrix.setToIdentity();
     modelViewMatrix.translate(QVector3D(0.0, 0.0, -3.0));
     modelViewMatrix.scale(QVector3D(1.0, 1.0, 1.0));
-//    modelViewMatrix.rotate(rotationAngle, QVector3D(0.0, 1.0, 0.0));
 }
 
 void Character::updateProjectionMatrix() {
     projectionMatrix.setToIdentity();
     projectionMatrix.perspective(FoV, dispRatio, 0.2, 20.0);
-    projectionMatrix.rotate(rotationAngle, QVector3D(0, 1, 0));
+    projectionMatrix.rotate(eyeDirection.x(), QVector3D(0.0, 1.0, 0.0));
+    projectionMatrix.rotate(eyeDirection.y(), QVector3D(1.0, 0.0, 0.0));
+    projectionMatrix.rotate(eyeDirection.z(), QVector3D(0.0, 0.0, 1.0));
     projectionMatrix.translate(position);
 }
 
@@ -64,20 +67,38 @@ void Character::changeZPosition(float n) {
     updateProjectionMatrix();
 }
 
-void Character::changeRotationAngle(float angle) {
-    qDebug() << angle;
-    rotationAngle = fmod((angle), 360);
+void Character::changeRotationAngleX(float angle) {
+    eyeDirection.setX(angle);
     updateModelMatrix();
+    updateProjectionMatrix();
+}
+
+void Character::changeRotationAngleY(float angle) {
+    eyeDirection.setY(angle);
+    updateModelMatrix();
+    updateProjectionMatrix();
+}
+
+void Character::changeRotationAngleZ(float angle) {
+    eyeDirection.setZ(angle);
+    updateModelMatrix();
+    updateProjectionMatrix();
 }
 
 void Character::keyPressEvent(QKeyEvent* event) {
     qDebug() << event->key();
     switch(event->key()) {
-    case 'A':
-        changeRotationAngle(1);
+    case 'a':
+        changeRotationAngleX(1);
         break;
-    case 'D':
-        changeRotationAngle(-10);
+    case 'd':
+        changeRotationAngleX(-1);
+        break;
+    case 'w':
+        changeRotationAngleY(1);
+        break;
+    case 's':
+        changeRotationAngleY(-1);
         break;
     }
 }

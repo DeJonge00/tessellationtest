@@ -24,13 +24,6 @@ void MainWindow::on_fovSpinbox_valueChanged(int value)
     ui->GameWidget->update();
 }
 
-void MainWindow::on_angleSpinbox_valueChanged(int value)
-{
-    ui->GameWidget->gameRenderer->gameCharacter->changeRotationAngle(value);
-    ui->GameWidget->gameRenderer->uniformUpdateRequired = true;
-    ui->GameWidget->update();
-}
-
 void MainWindow::on_scaleSpinbox_valueChanged(int value)
 {
     ui->GameWidget->gameRenderer->scale = value;
@@ -55,6 +48,27 @@ void MainWindow::on_positionY_valueChanged(double value)
 void MainWindow::on_positionZ_valueChanged(double value)
 {
     ui->GameWidget->gameRenderer->gameCharacter->changeZPosition(value);
+    ui->GameWidget->gameRenderer->uniformUpdateRequired = true;
+    ui->GameWidget->update();
+}
+
+void MainWindow::on_viewPointX_valueChanged(double value)
+{
+    ui->GameWidget->gameRenderer->gameCharacter->changeRotationAngleX(value);
+    ui->GameWidget->gameRenderer->uniformUpdateRequired = true;
+    ui->GameWidget->update();
+}
+
+void MainWindow::on_viewPointY_valueChanged(double value)
+{
+    ui->GameWidget->gameRenderer->gameCharacter->changeRotationAngleY(value);
+    ui->GameWidget->gameRenderer->uniformUpdateRequired = true;
+    ui->GameWidget->update();
+}
+
+void MainWindow::on_viewPointZ_valueChanged(double value)
+{
+    ui->GameWidget->gameRenderer->gameCharacter->changeRotationAngleZ(value);
     ui->GameWidget->gameRenderer->uniformUpdateRequired = true;
     ui->GameWidget->update();
 }

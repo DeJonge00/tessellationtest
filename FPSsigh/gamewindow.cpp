@@ -36,16 +36,3 @@ void GameWindow::paintGL() {
     qDebug() << "PaintGL";
     gameRenderer->render();
 }
-
-void GameWindow::keyPressEvent(QKeyEvent* event) {
-    qDebug() << event->key();
-    switch(event->key()) {
-    case 'A':
-        gameRenderer->gameCharacter->changeRotationAngle(1);
-        break;
-    case 'D':
-        gameRenderer->gameCharacter->changeRotationAngle(-10);
-        break;
-
-    }
-}

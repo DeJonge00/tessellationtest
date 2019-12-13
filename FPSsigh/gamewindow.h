@@ -4,7 +4,6 @@
 #include <QOpenGLDebugLogger>
 #include <QOpenGLFunctions_4_1_Core>
 #include <QOpenGLWidget>
-#include <QMouseEvent>
 
 #include "rendering/renderer.h"
 
@@ -14,7 +13,6 @@ public:
     GameWindow(QWidget *Parent = 0);
     ~GameWindow();
     Renderer *gameRenderer;
-    void keyPressEvent(QKeyEvent* event);
 
 protected:
     void initializeGL();
