@@ -25,7 +25,6 @@ private slots:
 
     void on_viewPointX_valueChanged(double value);
     void on_viewPointY_valueChanged(double value);
-    void on_viewPointZ_valueChanged(double value);
 
     void on_simpleShaderCheckbox_stateChanged(int value);
     void on_tessShaderCheckbox_stateChanged(int value);
@@ -33,6 +32,8 @@ private slots:
     void on_tessOuterSpinbox_valueChanged(int value);
 
     void on_scaleSpinbox_valueChanged(double value);
+
+    void on_respawnButton_clicked();
 
 private:
     Ui::MainWindow *ui;

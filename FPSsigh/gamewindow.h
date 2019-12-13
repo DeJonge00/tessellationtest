@@ -4,6 +4,7 @@
 #include <QOpenGLDebugLogger>
 #include <QOpenGLFunctions_4_1_Core>
 #include <QOpenGLWidget>
+#include <QMouseEvent>
 
 #include "rendering/renderer.h"
 
@@ -19,8 +20,11 @@ protected:
     void resizeGL(int newWidth, int newHeight);
     void paintGL();
 
-private:
+    void keyPressEvent(QKeyEvent* event);
+    void mousePressEvent(QMouseEvent* event);
+    void wheelEvent(QWheelEvent* event);
 
+private:
     void initDebugger();
     QOpenGLDebugLogger *debugLogger;
 };

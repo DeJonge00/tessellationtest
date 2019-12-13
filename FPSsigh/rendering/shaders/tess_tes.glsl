@@ -5,7 +5,6 @@ layout(quads, equal_spacing, ccw) in;
 layout (location = 0) in vec3 vertcoords_world_tes[];
 layout (location = 1) in vec3 vertnormal_world_tes[];
 
-layout (location = 0) out vec3 vertcoords_world_fs;
 layout (location = 1) out vec3 vertnormal_world_fs;
 
 
@@ -29,5 +28,15 @@ void main()
     vec3 p1 = mix(v1, v0, gl_TessCoord.x);
     vec3 p2 = mix(v2, v3, gl_TessCoord.x);
     gl_Position = vec4(mix(p1, p2, gl_TessCoord.y), 1);
+
+
+    v0 = vertnormal_world_tes[0];
+    v1 = vertnormal_world_tes[1];
+    v2 = vertnormal_world_tes[2];
+    v3 = vertnormal_world_tes[3];
+
+    p1 = mix(v1, v0, gl_TessCoord.x);
+    p2 = mix(v2, v3, gl_TessCoord.x);
+    vertnormal_world_fs = mix(p1, p2, gl_TessCoord.y);
 
 }

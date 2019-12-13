@@ -9,11 +9,13 @@ World::World()
 }
 
 void World::initDefaultScene() {
-    worldObjects.append(createCube(QVector3D(0, 0, -2), 1));
-    worldObjects.append(createCube(QVector3D(2, 0, -2), 1));
-    worldObjects.append(createCube(QVector3D(-2, 0, -3), 1));
+    worldObjects.append(createCube(QVector3D(0, 1, -2), 1));
+    worldObjects.append(createCube(QVector3D(2, 1, -2), 1));
     worldObjects.append(createCube(QVector3D(-2, 1, -3), 1));
     worldObjects.append(createCube(QVector3D(-2, 2, -3), 1));
+    worldObjects.append(createCube(QVector3D(-2, 3, -3), 1));
+
+    worldObjects.append(createCube(QVector3D(0, 0, 0), 20));
 }
 
 void World::getWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3D>& normals) {
@@ -59,7 +61,7 @@ WorldObject World::createCube(QVector3D location, float s) {
     QVector<QVector3D> vertices = QVector<QVector3D>();
     QVector<QVector3D> normals = QVector<QVector3D>();
 
-    float x = location.x(), y = location.y(), z = location.z();
+    float x = location.x() - s/2, y = location.y() - s/2, z = location.z() - s/2;
 
     // Front face
     vertices.append(QVector3D(x, y, z+s));
@@ -67,10 +69,10 @@ WorldObject World::createCube(QVector3D location, float s) {
     vertices.append(QVector3D(x+s, y+s, z+s));
     vertices.append(QVector3D(x, y+s, z+s));
 
-    normals.append(QVector3D(0, 0, 1));
-    normals.append(QVector3D(0, 0, 1));
-    normals.append(QVector3D(0, 0, 1));
-    normals.append(QVector3D(0, 0, 1));
+    normals.append(QVector3D(-1, -1, 1));
+    normals.append(QVector3D(1, -1, 1));
+    normals.append(QVector3D(1, 1, 1));
+    normals.append(QVector3D(-1, 1, 1));
 
     // Back face
     vertices.append(QVector3D(x+s, y, z));
@@ -117,10 +119,10 @@ WorldObject World::createCube(QVector3D location, float s) {
     normals.append(QVector3D(-1, 0, 0));
 
     // Right Face
-    vertices.append(QVector3D(x+1, y, z+s));
-    vertices.append(QVector3D(x+1, y, z));
-    vertices.append(QVector3D(x+1, y+s, z));
-    vertices.append(QVector3D(x+1, y+s, z+s));
+    vertices.append(QVector3D(x+s, y, z+s));
+    vertices.append(QVector3D(x+s, y, z));
+    vertices.append(QVector3D(x+s, y+s, z));
+    vertices.append(QVector3D(x+s, y+s, z+s));
 
     normals.append(QVector3D(1, 0, 0));
     normals.append(QVector3D(1, 0, 0));

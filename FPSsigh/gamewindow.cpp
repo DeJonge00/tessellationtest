@@ -2,7 +2,7 @@
 
 GameWindow::GameWindow(QWidget *Parent) : QOpenGLWidget(Parent)
 {
-
+    setEnabled(true);
 }
 
 GameWindow::~GameWindow() {
@@ -35,4 +35,18 @@ void GameWindow::resizeGL(int newWidth, int newHeight) {
 void GameWindow::paintGL() {
 //    qDebug() << "PaintGL";
     gameRenderer->render();
+}
+
+void GameWindow::keyPressEvent(QKeyEvent* event) {
+    gameRenderer->gameCharacter->handleKeypress(event->key());
+    update();
+}
+
+void GameWindow::mousePressEvent(QMouseEvent* event) {
+    setFocus();
+}
+
+void GameWindow::wheelEvent(QWheelEvent* event) {
+    gameRenderer->gameCharacter->changeFoV(-event->delta() / 12.0);
+    update();
 }
