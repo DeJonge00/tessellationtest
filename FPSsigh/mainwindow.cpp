@@ -24,13 +24,6 @@ void MainWindow::on_fovSpinbox_valueChanged(int value)
     ui->GameWidget->update();
 }
 
-void MainWindow::on_scaleSpinbox_valueChanged(int value)
-{
-    ui->GameWidget->gameRenderer->scale = value;
-    ui->GameWidget->gameRenderer->uniformUpdateRequired = true;
-    ui->GameWidget->update();
-}
-
 void MainWindow::on_positionX_valueChanged(double value)
 {
     ui->GameWidget->gameRenderer->gameCharacter->changeXPosition(value);
@@ -69,6 +62,37 @@ void MainWindow::on_viewPointY_valueChanged(double value)
 void MainWindow::on_viewPointZ_valueChanged(double value)
 {
     ui->GameWidget->gameRenderer->gameCharacter->changeRotationAngleZ(value);
+    ui->GameWidget->gameRenderer->uniformUpdateRequired = true;
+    ui->GameWidget->update();
+}
+
+void MainWindow::on_simpleShaderCheckbox_stateChanged(int value)
+{
+    ui->GameWidget->gameRenderer->enableSimpleShader = value == 2;
+    ui->GameWidget->update();
+}
+
+void MainWindow::on_tessShaderCheckbox_stateChanged(int value)
+{
+    ui->GameWidget->gameRenderer->enableTessShader = value == 2;
+    ui->GameWidget->update();
+}
+
+void MainWindow::on_tessInnerSpinbox_valueChanged(int value)
+{
+    ui->GameWidget->gameRenderer->tessellationInner = value;
+    ui->GameWidget->update();
+}
+
+void MainWindow::on_tessOuterSpinbox_valueChanged(int value)
+{
+    ui->GameWidget->gameRenderer->tessellationOuter = value;
+    ui->GameWidget->update();
+}
+
+void MainWindow::on_scaleSpinbox_valueChanged(double value)
+{
+    ui->GameWidget->gameRenderer->scale = value;
     ui->GameWidget->gameRenderer->uniformUpdateRequired = true;
     ui->GameWidget->update();
 }

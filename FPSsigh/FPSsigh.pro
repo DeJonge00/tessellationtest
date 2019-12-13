@@ -23,7 +23,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     rendering/renderer.cpp \
-    rendering/simpleobjectspipeline.cpp
+    rendering/simpleobjectspipeline.cpp \
+    rendering/tessellationpipeline.cpp
 
 HEADERS += \
     gamewindow.h \

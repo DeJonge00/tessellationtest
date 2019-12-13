@@ -1,14 +1,18 @@
 #include "renderer.h"
 #include <QVector>
 #include <QVector3D>
+
 Renderer::Renderer()
+    : uniformUpdateRequired(true),
+      gameWorld(new World()),
+      gameCharacter(new Character()),
+      scale(1.0),
+      enableSimpleShader(true),
+      enableTessShader(true),
+      tessellationInner(1),
+      tessellationOuter(2)
 {
     qDebug() << "Renderer constructor";
-    uniformUpdateRequired = true;
-    gameWorld = new World();
-    gameCharacter = new Character();
-
-    scale = 10;
 
     initializeOpenGLFunctions();
 
@@ -24,7 +28,6 @@ Renderer::Renderer()
     GLint MaxPatchVertices = 0;
     glGetIntegerv(GL_MAX_PATCH_VERTICES, &MaxPatchVertices);
     qDebug() << "Maximum patch vertices:" << MaxPatchVertices;
-    glPatchParameteri(GL_PATCH_VERTICES, 4);
 
     createShaderPrograms();
     createBuffers();
@@ -33,26 +36,30 @@ Renderer::Renderer()
 Renderer::~Renderer()
 {
     qDebug() << "Renderer destructor";
-    glDeleteBuffers(1, &coordinatesBO);
-    glDeleteBuffers(1, &normalsBO);
+    glDeleteBuffers(1, &simpleCoordinatesBO);
+    glDeleteBuffers(1, &simpleNormalsBO);
 
     delete simpleShaderProgram;
+
+    glDeleteBuffers(1, &tessCoordinatesBO);
+    glDeleteBuffers(1, &tessNormalsBO);
+
+    delete tessShaderProgram;
 }
 
 void Renderer::createShaderPrograms() {
     createSimpleShaderProgram();
+    createTessShaderProgram();
 }
 
 void Renderer::createBuffers() {
     createSimpleBuffers();
+    createTessBuffers();
 }
 
 void Renderer::updateBuffers() {
-    updateSimpleBuffers();
-}
-
-void Renderer::updateUniforms() {
-    updateSimpleUniforms();
+    if (enableSimpleShader) { updateSimpleBuffers(); }
+    if (enableTessShader) { updateTessBuffers(); }
 }
 
 void Renderer::render() {
@@ -60,5 +67,6 @@ void Renderer::render() {
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    renderSimpleObjects(uniformUpdateRequired);
+    if (enableSimpleShader) { renderSimpleObjects(uniformUpdateRequired); }
+    if (enableTessShader) { renderQuads(uniformUpdateRequired); }
 }

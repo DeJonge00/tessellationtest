@@ -1,6 +1,13 @@
 <RCC>
-    <qresource prefix="/">
-        <file>rendering/shaders/fragshader.glsl</file>
-        <file>rendering/shaders/vertshader_t.glsl</file>
+    <qresource prefix="/simple">
+        <file>rendering/shaders/simple_fs.glsl</file>
+        <file>rendering/shaders/simple_vs.glsl</file>
+    </qresource>
+    <qresource prefix="/tess">
+        <file>rendering/shaders/tess_fs.glsl</file>
+        <file>rendering/shaders/tess_tcs.glsl</file>
+        <file>rendering/shaders/tess_tes.glsl</file>
+        <file>rendering/shaders/tess_vs.glsl</file>
+        <file>rendering/shaders/tess_geo.glsl</file>
     </qresource>
 </RCC>

@@ -18,7 +18,12 @@ public:
     World();
 
     void getWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3D>& normals);
+    void getWorldQuads(QVector<QVector3D>& vertices, QVector<QVector3D>& normals);
+
+    void initDefaultScene();
+    WorldObject createCube(QVector3D location, float size);
     void addDefaultWorldObject();
+
 
 protected:
     QVector<WorldObject> worldObjects;

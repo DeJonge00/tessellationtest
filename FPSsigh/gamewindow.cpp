@@ -33,6 +33,6 @@ void GameWindow::resizeGL(int newWidth, int newHeight) {
 }
 
 void GameWindow::paintGL() {
-    qDebug() << "PaintGL";
+//    qDebug() << "PaintGL";
     gameRenderer->render();
 }

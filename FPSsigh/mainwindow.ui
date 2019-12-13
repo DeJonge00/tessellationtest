@@ -54,7 +54,7 @@
       <x>10</x>
       <y>30</y>
       <width>171</width>
-      <height>297</height>
+      <height>388</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -85,21 +85,21 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="scaleSpinbox">
+      <widget class="QDoubleSpinBox" name="scaleSpinbox">
        <property name="prefix">
         <string>Scale: </string>
        </property>
        <property name="minimum">
-        <number>0</number>
+        <double>0.010000000000000</double>
        </property>
        <property name="maximum">
-        <number>100</number>
+        <double>10.000000000000000</double>
        </property>
        <property name="singleStep">
-        <number>1</number>
+        <double>0.100000000000000</double>
        </property>
        <property name="value">
-        <number>10</number>
+        <double>1.000000000000000</double>
        </property>
       </widget>
      </item>
@@ -201,6 +201,71 @@
        </property>
        <property name="singleStep">
         <double>5.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Shaders</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="simpleShaderCheckbox">
+       <property name="text">
+        <string>Simple shader</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="tessShaderCheckbox">
+       <property name="text">
+        <string>Tesselation shader</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="tessInnerSpinbox">
+       <property name="suffix">
+        <string/>
+       </property>
+       <property name="prefix">
+        <string>Inner: </string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>10</number>
+       </property>
+       <property name="singleStep">
+        <number>1</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="tessOuterSpinbox">
+       <property name="suffix">
+        <string/>
+       </property>
+       <property name="prefix">
+        <string>Outer: </string>
+       </property>
+       <property name="minimum">
+        <number>2</number>
+       </property>
+       <property name="maximum">
+        <number>10</number>
+       </property>
+       <property name="singleStep">
+        <number>1</number>
        </property>
       </widget>
      </item>

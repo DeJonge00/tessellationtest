@@ -33,7 +33,7 @@ void Character::updateProjectionMatrix() {
     projectionMatrix.rotate(eyeDirection.x(), QVector3D(0.0, 1.0, 0.0));
     projectionMatrix.rotate(eyeDirection.y(), QVector3D(1.0, 0.0, 0.0));
     projectionMatrix.rotate(eyeDirection.z(), QVector3D(0.0, 0.0, 1.0));
-    projectionMatrix.translate(position);
+    projectionMatrix.translate(position.x(), -position.y(), position.z());
 }
 
 void Character::updateNormalMatrix() {
@@ -41,13 +41,11 @@ void Character::updateNormalMatrix() {
 }
 
 void Character::changeFoV(float fov) {
-    qDebug() << fov;
     FoV = fov;
     updateProjectionMatrix();
 }
 
 void Character::changeDispRatio(float disprat) {
-    qDebug() << disprat;
     dispRatio = disprat;
     updateProjectionMatrix();
 }

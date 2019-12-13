@@ -9,7 +9,7 @@ class Character
 {
 public:
     Character(QVector3D pos, QVector3D view);
-    Character() : Character(QVector3D(0, 0, 0), QVector3D(0, 0, -1)) {};
+    Character() : Character(QVector3D(0, 2, 0), QVector3D(0, 0, -1)) {};
     QMatrix4x4 modelViewMatrix, projectionMatrix;
     QMatrix3x3 normalMatrix;
     void changeFoV(float fov);
