@@ -37,3 +37,24 @@ void MainWindow::on_scaleSpinbox_valueChanged(int value)
     ui->GameWidget->gameRenderer->uniformUpdateRequired = true;
     ui->GameWidget->update();
 }
+
+void MainWindow::on_positionX_valueChanged(double value)
+{
+    ui->GameWidget->gameRenderer->gameCharacter->changeXPosition(value);
+    ui->GameWidget->gameRenderer->uniformUpdateRequired = true;
+    ui->GameWidget->update();
+}
+
+void MainWindow::on_positionY_valueChanged(double value)
+{
+    ui->GameWidget->gameRenderer->gameCharacter->changeYPosition(value);
+    ui->GameWidget->gameRenderer->uniformUpdateRequired = true;
+    ui->GameWidget->update();
+}
+
+void MainWindow::on_positionZ_valueChanged(double value)
+{
+    ui->GameWidget->gameRenderer->gameCharacter->changeZPosition(value);
+    ui->GameWidget->gameRenderer->uniformUpdateRequired = true;
+    ui->GameWidget->update();
+}

@@ -30,7 +30,6 @@ void Renderer::updateSimpleBuffers() {
     QVector<QVector3D> normals = QVector<QVector3D>();
 
     gameWorld->getWorldObjects(vertices, normals);
-    qDebug() << "updateBuffers:" << vertices.first() << normals.first();
 
     glBindBuffer(GL_ARRAY_BUFFER, coordinatesBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(QVector3D)*vertices.size(), vertices.data(), GL_DYNAMIC_DRAW);
@@ -42,10 +41,6 @@ void Renderer::updateSimpleBuffers() {
 }
 
 void Renderer::updateSimpleUniforms() {
-    // update matrices
-    for (int i = 0; i < 9; i++) {
-        qDebug() << gameCharacter->modelViewMatrix.data()[i];
-    }
     simpleShaderProgram->setUniformValue("modelviewmatrix", gameCharacter->modelViewMatrix);
     simpleShaderProgram->setUniformValue("projectionmatrix", gameCharacter->projectionMatrix);
     simpleShaderProgram->setUniformValue("normalmatrix", gameCharacter->normalMatrix);
@@ -61,8 +56,9 @@ void Renderer::renderSimpleObjects(bool uniformUpdateRequired) {
     }
 
     glBindVertexArray(worldVAO);
-    glPointSize(12.0);
     glDrawArrays(GL_LINES, 0, worldIBOsize);
+    glPointSize(12.0);
+    glDrawArrays(GL_POINTS, 0, worldIBOsize);
 
     glBindVertexArray(0);
 

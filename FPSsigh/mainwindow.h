@@ -23,6 +23,12 @@ private slots:
 
     void on_scaleSpinbox_valueChanged(int value);
 
+    void on_positionX_valueChanged(double arg1);
+
+    void on_positionY_valueChanged(double arg1);
+
+    void on_positionZ_valueChanged(double arg1);
+
 private:
     Ui::MainWindow *ui;
 };
