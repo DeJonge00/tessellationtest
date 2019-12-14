@@ -4,7 +4,6 @@
 #include "ui_mainwindow.h"
 #include "logic/gameloopthread.h"
 
-
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -20,9 +19,9 @@ void MainWindow::setFpsLabel(int fps) {
 }
 
 void MainWindow::startGameLoop() {
-    GameLoopThread *glt = new GameLoopThread(this, ui->GameWidget);
-    QObject::connect(glt, SIGNAL(finished()), this, SLOT(gameLoopQuit()));
-    glt->start();
+    gameLoopThread = new GameLoopThread(this, ui->GameWidget);
+    QObject::connect(gameLoopThread, SIGNAL(finished()), this, SLOT(gameLoopQuit()));
+    gameLoopThread->start();
 }
 
 void MainWindow::gameLoopQuit() {
@@ -113,4 +112,9 @@ void MainWindow::on_respawnButton_clicked()
     ui->GameWidget->gameRenderer->gameCharacter->setPosition(QVector3D(0, 2, 0));
     ui->GameWidget->gameRenderer->gameCharacter->setRotation(QVector2D(0, -1));
     ui->GameWidget->update();
+}
+
+void MainWindow::on_maxFps_valueChanged(int value)
+{
+    gameLoopThread->maxFps = value;
 }

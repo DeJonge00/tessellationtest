@@ -3,9 +3,12 @@
 
 #include <QMainWindow>
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+
+class GameLoopThread;
 
 class MainWindow : public QMainWindow
 {
@@ -37,8 +40,11 @@ private slots:
 
     void on_respawnButton_clicked();
 
+    void on_maxFps_valueChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
+    GameLoopThread* gameLoopThread;
 
 public slots:
     void gameLoopQuit();

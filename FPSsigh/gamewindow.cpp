@@ -42,6 +42,7 @@ void GameWindow::switchMouseEnabled() {
     setMouseTracking(mouseTracking);
     if (mouseTracking) {
         setCursor(Qt::BlankCursor);
+        QCursor::setPos(pos().x()+width()/2, pos().y() + height()/2);
     } else {
         setCursor(Qt::ArrowCursor);
     }
@@ -61,7 +62,11 @@ void GameWindow::wheelEvent(QWheelEvent* event) {
 
 void GameWindow::mouseMoveEvent(QMouseEvent *event) {
     if (this->hasFocus()) {
-        gameRenderer->gameCharacter->handleMouse(event->pos());
-        QCursor::setPos(pos().x()+width()/2, pos().y() + height()/2);
+        float x = event->screenPos().x();
+        float y = event->screenPos().y();
+        float xm = pos().x() + width()/2;
+        float ym = pos().y() + height()/2;
+        gameRenderer->gameCharacter->handleMouse(QPoint(x - xm, y - ym));
+        QCursor::setPos(xm, ym);
     }
 }

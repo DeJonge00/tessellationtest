@@ -200,12 +200,8 @@ void Character::handleKeypress(char key, bool pressed) {
 
 void Character::handleMouse(QPoint mousePos) {
 //    qDebug() << mousePos;
-    if (lastMousePosition.x() != -1) {
-        qDebug() << (lastMousePosition.x() - mousePos.x()) << -(lastMousePosition.y() - mousePos.y());
-        changeRotationAngleX((lastMousePosition.x() - mousePos.x()) / 7);
-        changeRotationAngleY(-(lastMousePosition.y() - mousePos.y()) / 7);
-    }
-    lastMousePosition = mousePos;
+    changeRotationAngleX(mousePos.x() / 7);
+    changeRotationAngleY(-mousePos.y() / 7);
 }
 
 void Character::positionForward(float n) {

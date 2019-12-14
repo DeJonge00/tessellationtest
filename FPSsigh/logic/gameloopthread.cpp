@@ -1,7 +1,8 @@
 #include "gameloopthread.h"
 
 GameLoopThread::GameLoopThread(MainWindow* mw, GameWindow *gw)
-    : running(false), ui(mw), gameWindow(gw), fpsCounter(new FPScounter())
+    : running(false), ui(mw), gameWindow(gw), fpsCounter(new FPScounter()),
+      maxFps(330)
 {
 
 }
@@ -10,21 +11,14 @@ void GameLoopThread::run() {
     running = true;
     int framecounter = 0;
     std::chrono::high_resolution_clock::time_point start, end;
-    end = std::chrono::high_resolution_clock::now();
+    double prevCycleTime = 0;
     while (running) {
+        framecounter++;
         // Loop time stuff
         start = std::chrono::high_resolution_clock::now();
-        double prevCycleTime = std::chrono::duration_cast<std::chrono::duration<double>>(end-start).count();
-
-        double minLoopTime = 0.01; // seconds
-        if (prevCycleTime < minLoopTime) {
-            msleep(1000*(minLoopTime - prevCycleTime));
-            prevCycleTime = minLoopTime;
-        }
-        framecounter++;
 
         // Update character (handle controls)
-        gameWindow->gameRenderer->gameCharacter->update(1000*prevCycleTime);
+        gameWindow->gameRenderer->gameCharacter->update(2*prevCycleTime);
 
         // Update FPS counter
         fpsCounter->addFrameTime(start);
@@ -35,5 +29,14 @@ void GameLoopThread::run() {
 
         gameWindow->update();
         end = std::chrono::high_resolution_clock::now();
+
+        prevCycleTime = std::chrono::duration_cast<std::chrono::duration<double>>(end-start).count();
+        double minLoopTime = 1000/maxFps; // milliseconds
+        double sleepTime = fmin(minLoopTime-(1000*prevCycleTime), minLoopTime);
+//        qDebug() << "Thread" << minLoopTime << maxFps << prevCycleTime << sleepTime;
+        if (sleepTime > 0) {
+            msleep(sleepTime);
+            prevCycleTime = minLoopTime;
+        }
     }
 }

@@ -17,6 +17,7 @@ public:
     bool running;
 
     void run() override;
+    double maxFps;
 
 private:
     MainWindow *ui;
