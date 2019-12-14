@@ -29,7 +29,7 @@ void Renderer::updateSimpleBuffers() {
     QVector<QVector3D> vertices = QVector<QVector3D>();
     QVector<QVector3D> normals = QVector<QVector3D>();
 
-    gameWorld->getWorldObjects(vertices, normals);
+    gameWorld->getSimpleWorldObjects(vertices, normals);
 
     glBindBuffer(GL_ARRAY_BUFFER, simpleCoordinatesBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(QVector3D)*vertices.size(), vertices.data(), GL_DYNAMIC_DRAW);

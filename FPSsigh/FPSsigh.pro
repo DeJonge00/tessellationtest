@@ -17,7 +17,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     gamewindow.cpp \
+    logic/Loading/objectloader.cpp \
     logic/character.cpp \
+    logic/chunk.cpp \
+    logic/initscenes.cpp \
     logic/world.cpp \
     logic/worldobject.cpp \
     main.cpp \
@@ -29,6 +32,7 @@ SOURCES += \
 HEADERS += \
     gamewindow.h \
     logic/character.h \
+    logic/chunk.h \
     logic/face.h \
     logic/halfedge.h \
     logic/vertex.h \

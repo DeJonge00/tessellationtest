@@ -34,7 +34,7 @@ void Renderer::updateTessBuffers() {
     QVector<QVector3D> vertices = QVector<QVector3D>();
     QVector<QVector3D> normals = QVector<QVector3D>();
 
-    gameWorld->getWorldQuads(vertices, normals);
+    gameWorld->getTessWorldObjects(vertices, normals);
 
     glBindBuffer(GL_ARRAY_BUFFER, tessCoordinatesBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(QVector3D)*vertices.size(), vertices.data(), GL_DYNAMIC_DRAW);

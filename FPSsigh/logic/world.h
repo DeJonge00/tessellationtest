@@ -17,16 +17,18 @@ class World
 public:
     World();
 
-    void getWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3D>& normals);
-    void getWorldQuads(QVector<QVector3D>& vertices, QVector<QVector3D>& normals);
+    void getSimpleWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3D>& normals);
+    void getTessWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3D>& normals);
 
+    void addScene(QString name);
     void initDefaultScene();
-    WorldObject createCube(QVector3D location, float size);
-    void addDefaultWorldObject();
-
 
 protected:
-    QVector<WorldObject> worldObjects;
+    QVector<WorldObject *> worldObjects;
+
+private:
+    WorldObject* objectLoader(QString fileName, QString name);
+    inline WorldObject* objectLoader(QString fileName) { return objectLoader(fileName, "Object"); };
 };
 
 #endif // WORLD_H

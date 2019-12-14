@@ -5,20 +5,34 @@
 #include <QOpenGLDebugLogger>
 #include <QVector3D>
 
+#include "logic/face.h"
+#include "logic/vertex.h"
+#include "logic/halfedge.h"
+
 
 class WorldObject
 {
 public:
-    WorldObject(QVector<QVector3D> vertices, QVector<QVector3D> normals);
-    WorldObject() : WorldObject(QVector<QVector3D>(), QVector<QVector3D>()) {};
-    QVector<QVector3D> getVertices();
-    QVector<QVector3D> getNormals();
+    WorldObject();
+    void WorldObject::getSimpleArrays(QVector<QVector3D>& vertices, QVector<QVector3D>& normals);
+    void WorldObject::getTessArrays(QVector<QVector3D>& vertices, QVector<QVector3D>& normals);
 
-    void addFace(QVector<QVector3D> vertices, QVector<QVector3D> normals);
+    void addFace(Face *f);
+    void addVertex(Vertex *v);
+    void addHalfedge(HalfEdge *h);
 
-private:
-    QVector<QVector3D> vertices;
-    QVector<QVector3D> normals;
+    void addFaces(QVector<Face *> fs);
+    void addVertices(QVector<Vertex *> vs);
+    void addHalfedges(QVector<HalfEdge *> hs);
+
+    QString name;
+    QVector<Vertex *> vertices;
+    QVector<QVector3D *> normals;
+    QVector<Face *> faces;
+    QVector<HalfEdge *> halfedges;
+
+    void scale(float s);
+    void translate(QVector3D t);
 };
 
 #endif // WORLDOBJECT_H

@@ -28,7 +28,7 @@ void Character::updateModelMatrix() {
 
 void Character::updateProjectionMatrix() {
     projectionMatrix.setToIdentity();
-    projectionMatrix.perspective(FoV, dispRatio, 0.2, 20.0);
+    projectionMatrix.perspective(FoV, dispRatio, 0.2, 50.0);
     projectionMatrix.rotate(angleSide, QVector3D(0, 1, 0));
     projectionMatrix.rotate(angleUp, getDirectionSide());
 
