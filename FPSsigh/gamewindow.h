@@ -5,28 +5,34 @@
 #include <QOpenGLFunctions_4_1_Core>
 #include <QOpenGLWidget>
 #include <QMouseEvent>
+#include <QThread>
 
 #include "rendering/renderer.h"
+
 
 class GameWindow : public QOpenGLWidget
 {
 public:
     GameWindow(QWidget *Parent = 0);
     ~GameWindow();
-    Renderer *gameRenderer;
+
+    Renderer* gameRenderer;
 
 protected:
     void initializeGL();
     void resizeGL(int newWidth, int newHeight);
     void paintGL();
 
-    void keyPressEvent(QKeyEvent* event);
-    void mousePressEvent(QMouseEvent* event);
-    void wheelEvent(QWheelEvent* event);
+    void keyPressEvent(QKeyEvent* event) override;
+    void keyReleaseEvent(QKeyEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void wheelEvent(QWheelEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
 
 private:
-    void initDebugger();
-    QOpenGLDebugLogger *debugLogger;
+    void switchMouseEnabled();
+    bool mouseTracking;
+
 };
 
 #endif // GAMEWINDOW_H

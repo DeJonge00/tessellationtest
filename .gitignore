@@ -34,3 +34,7 @@
 # QT junk
 *.pro.user
 build-*
+
+# Models
+*.mtl
+*.blend

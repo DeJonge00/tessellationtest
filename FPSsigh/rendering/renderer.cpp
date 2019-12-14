@@ -4,6 +4,7 @@
 
 Renderer::Renderer()
     : uniformUpdateRequired(true),
+      running(false),
       gameWorld(new World()),
       gameCharacter(new Character()),
       scale(1.0),

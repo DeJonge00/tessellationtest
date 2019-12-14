@@ -8,12 +8,15 @@
 
 #include "logic/world.h"
 #include "logic/character.h"
+#include "logic/fpscounter.h"
+
 
 class Renderer: protected QOpenGLFunctions_4_1_Core
 {
 public:
     Renderer();
     ~Renderer();
+    bool running;
 
     World *gameWorld;
     Character *gameCharacter;

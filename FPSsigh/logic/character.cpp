@@ -8,9 +8,34 @@
 # define PI 3.14159265358979323846
 
 Character::Character(QVector3D pos, float view)
-    : position(pos), angleUp(0), angleSide(view)
+    : position(pos), angleSide(view), angleUp(0),
+      movingForward(false), movingBack(false), movingRight(false), movingLeft(false),
+      movingUp(false), movingDown(false),
+      lastMousePosition(QPoint(-1, -1))
 {
     initView();
+}
+
+void Character::update(float scale) {
+//    qDebug() << "Update character" << scale << movingForward;
+    if (movingForward && !movingBack) {
+        positionForward(scale / 100);
+    }
+    if (!movingForward && movingBack) {
+        positionBack(scale / 100);
+    }
+    if (movingRight && !movingLeft) {
+        positionRight(scale / 100);
+    }
+    if (!movingRight && movingLeft) {
+        positionLeft(scale / 100);
+    }
+    if (movingUp && !movingDown) {
+        positionUp(scale / 100);
+    }
+    if (!movingUp && movingDown) {
+        positionDown(scale / 100);
+    }
 }
 
 void Character::initView() {
@@ -125,32 +150,45 @@ QVector3D Character::getDirectionSide() {
     return QVector3D(-sin(a), 0, cos(a));
 }
 
-void Character::handleKeypress(char key) {
+void Character::handleKeypress(char key, bool pressed) {
+//    qDebug() << "Key" << key <<  pressed;
     switch(key) {
     case 'A':
-        positionLeft(1.0);
+        movingLeft = pressed;
         break;
     case 'D':
-        positionRight(1.0);
+        movingRight = pressed;
         break;
     case 'W':
-        positionForward(1.0);
+        movingForward = pressed;
         break;
     case 'S':
-        positionBack(1.0);
+        movingBack = pressed;
         break;
 
-    case '': // Arrow up
+    case 'M': // Mouse tracking
+        lastMousePosition = QPoint(-1, -1);
+        break;
+
+    case Qt::Key_Up:
         changeRotationAngleY(1.0);
         break;
-    case '': // Arrow left
+    case Qt::Key_Left:
         changeRotationAngleX(-2.0);
         break;
-    case '': // Arrow down
+    case Qt::Key_Down:
         changeRotationAngleY(-1.0);
         break;
-    case '': // Arrow right
+    case Qt::Key_Right:
         changeRotationAngleX(2.0);
+        break;
+
+    case Qt::Key_Space:
+        movingUp = pressed;
+        break;
+    case Qt::Key_Control:
+    case 'C':
+        movingDown = pressed;
         break;
 
     case 'R':
@@ -158,6 +196,16 @@ void Character::handleKeypress(char key) {
         setRotation(QVector2D(0, -1));
         break;
     }
+}
+
+void Character::handleMouse(QPoint mousePos) {
+//    qDebug() << mousePos;
+    if (lastMousePosition.x() != -1) {
+        qDebug() << (lastMousePosition.x() - mousePos.x()) << -(lastMousePosition.y() - mousePos.y());
+        changeRotationAngleX((lastMousePosition.x() - mousePos.x()) / 7);
+        changeRotationAngleY(-(lastMousePosition.y() - mousePos.y()) / 7);
+    }
+    lastMousePosition = mousePos;
 }
 
 void Character::positionForward(float n) {
@@ -177,5 +225,15 @@ void Character::positionLeft(float n) {
 
 void Character::positionRight(float n) {
     position += getDirectionSide() * n;
+    updateProjectionMatrix();
+}
+
+void Character::positionUp(float n) {
+    changeYPosition(n);
+    updateProjectionMatrix();
+}
+
+void Character::positionDown(float n) {
+    changeYPosition(-n);
     updateProjectionMatrix();
 }

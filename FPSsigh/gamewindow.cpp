@@ -1,25 +1,18 @@
-#include "gamewindow.h"
+#include <QTime>
 
-GameWindow::GameWindow(QWidget *Parent) : QOpenGLWidget(Parent)
+#include "gamewindow.h"
+#include "logic/gameloopthread.h"
+
+
+GameWindow::GameWindow(QWidget *Parent) : QOpenGLWidget(Parent),
+    mouseTracking(true)
 {
     setEnabled(true);
+    switchMouseEnabled();
 }
 
 GameWindow::~GameWindow() {
-    debugLogger->stopLogging();
 
-    delete debugLogger;
-}
-
-void GameWindow::initDebugger() {
-    debugLogger = new QOpenGLDebugLogger();
-    connect( debugLogger, SIGNAL( messageLogged( QOpenGLDebugMessage ) ), this, SLOT( onMessageLogged( QOpenGLDebugMessage ) ), Qt::DirectConnection );
-
-    if ( debugLogger->initialize() ) {
-        qDebug() << ":: Logging initialized";
-        debugLogger->startLogging( QOpenGLDebugLogger::SynchronousLogging );
-        debugLogger->enableMessages();
-    }
 }
 
 // Override QOpenGLWidget functions
@@ -38,8 +31,24 @@ void GameWindow::paintGL() {
 }
 
 void GameWindow::keyPressEvent(QKeyEvent* event) {
-    gameRenderer->gameCharacter->handleKeypress(event->key());
-    update();
+    if (event->key() == 'M') {
+        switchMouseEnabled();
+    }
+    gameRenderer->gameCharacter->handleKeypress(event->key(), true);
+}
+
+void GameWindow::switchMouseEnabled() {
+    mouseTracking = !mouseTracking;
+    setMouseTracking(mouseTracking);
+    if (mouseTracking) {
+        setCursor(Qt::BlankCursor);
+    } else {
+        setCursor(Qt::ArrowCursor);
+    }
+}
+
+void GameWindow::keyReleaseEvent(QKeyEvent* event) {
+    gameRenderer->gameCharacter->handleKeypress(event->key(), false);
 }
 
 void GameWindow::mousePressEvent(QMouseEvent* event) {
@@ -48,5 +57,11 @@ void GameWindow::mousePressEvent(QMouseEvent* event) {
 
 void GameWindow::wheelEvent(QWheelEvent* event) {
     gameRenderer->gameCharacter->changeFoV(-event->delta() / 12.0);
-    update();
+}
+
+void GameWindow::mouseMoveEvent(QMouseEvent *event) {
+    if (this->hasFocus()) {
+        gameRenderer->gameCharacter->handleMouse(event->pos());
+        QCursor::setPos(pos().x()+width()/2, pos().y() + height()/2);
+    }
 }

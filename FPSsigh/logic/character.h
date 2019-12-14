@@ -20,7 +20,9 @@ public:
     void setRotationAngleX(float angle);
     void setRotationAngleY(float angle);
     void setRotation(QVector2D);
-    void handleKeypress(char key);
+
+    void handleKeypress(char key, bool pressed);
+    void handleMouse(QPoint mousePos);
 
     void changeXPosition(float n);
     void changeYPosition(float n);
@@ -37,11 +39,25 @@ public:
     void positionBack(float n);
     void positionLeft(float n);
     void positionRight(float n);
+    void positionUp(float n);
+    void positionDown(float n);
+
+    void update(float scale);
+
 protected:
 private:
-    float rotationAngle;
     float FoV;
     float dispRatio;
+    float rotationAngle;
+
+    bool movingForward;
+    bool movingBack;
+    bool movingRight;
+    bool movingLeft;
+    bool movingUp;
+    bool movingDown;
+
+    QPoint lastMousePosition;
 
     QVector3D getDirection();
     QVector3D getDirectionSide();

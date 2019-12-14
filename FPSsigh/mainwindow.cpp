@@ -1,5 +1,9 @@
+#include <QThread>
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "logic/gameloopthread.h"
+
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -9,6 +13,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::setFpsLabel(int fps) {
+    ui->fpsLabel->setText(QString("FPS: %1").arg(fps));
+}
+
+void MainWindow::startGameLoop() {
+    GameLoopThread *glt = new GameLoopThread(this, ui->GameWidget);
+    QObject::connect(glt, SIGNAL(finished()), this, SLOT(gameLoopQuit()));
+    glt->start();
+}
+
+void MainWindow::gameLoopQuit() {
+    qDebug() << "Gameloop ended";
 }
 
 

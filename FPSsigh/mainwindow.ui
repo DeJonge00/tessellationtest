@@ -30,7 +30,7 @@
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>30</y>
+      <y>40</y>
       <width>1700</width>
       <height>1000</height>
      </rect>
@@ -52,9 +52,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>30</y>
+      <y>110</y>
       <width>171</width>
-      <height>417</height>
+      <height>471</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -104,7 +104,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="positionLabel">
        <property name="text">
         <string>Position</string>
        </property>
@@ -150,7 +150,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="viewPointLabel">
        <property name="text">
         <string>Viewpoint</string>
        </property>
@@ -189,7 +189,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="shaderLabel">
        <property name="text">
         <string>Shaders</string>
        </property>
@@ -261,6 +261,24 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QLabel" name="fpsLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>171</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>FPS: 0</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

@@ -20,6 +20,8 @@ SOURCES += \
     logic/Loading/objectloader.cpp \
     logic/character.cpp \
     logic/chunk.cpp \
+    logic/fpscounter.cpp \
+    logic/gameloopthread.cpp \
     logic/initscenes.cpp \
     logic/world.cpp \
     logic/worldobject.cpp \
@@ -34,6 +36,8 @@ HEADERS += \
     logic/character.h \
     logic/chunk.h \
     logic/face.h \
+    logic/fpscounter.h \
+    logic/gameloopthread.h \
     logic/halfedge.h \
     logic/vertex.h \
     logic/world.h \

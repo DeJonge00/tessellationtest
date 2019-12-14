@@ -14,6 +14,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void startGameLoop();
+    void setFpsLabel(int fps);
 
 private slots:
     void on_pushButton_clicked();
@@ -37,5 +39,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+public slots:
+    void gameLoopQuit();
 };
 #endif // MAINWINDOW_H
