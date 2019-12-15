@@ -3,6 +3,18 @@
 
 #include "logic/world.h"
 
+void World::loadObject(QString dir_name, QString name) {
+    loadedWorldObjects.append(objectLoader(objectPath + dir_name + "/" + name + ".obj", name));
+}
+
+WorldObject* World::getLoadedObject(QString name) {
+    for (WorldObject* wo : loadedWorldObjects) {
+        if (!name.compare(wo->name)) {
+            return wo->copy();
+        }
+    }
+}
+
 WorldObject* World::objectLoader(QString fileName, QString name) {
     qDebug() << "Loading object:" << fileName;
     WorldObject *object = new WorldObject();
@@ -57,6 +69,7 @@ WorldObject* World::objectLoader(QString fileName, QString name) {
                 ches.last()->target->val++;
                 ches.last()->target->normal = *object->normals.at(split.at(2).toInt() - 1);
                 ches.last()->polygon = face;
+                ches.last()->index = i + object->halfedges.size();
             }
 
             for (int i = 0; i < ches.size(); i++) {

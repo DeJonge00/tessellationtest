@@ -26,6 +26,7 @@ void MainWindow::startGameLoop() {
 
 void MainWindow::gameLoopQuit() {
     qDebug() << "Gameloop ended";
+    close();
 }
 
 

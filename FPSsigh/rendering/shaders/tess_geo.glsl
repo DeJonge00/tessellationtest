@@ -7,7 +7,7 @@ uniform mat4 modelviewmatrix;
 uniform mat4 projectionmatrix;
 uniform mat3 normalmatrix;
 
-layout(triangle_strip, max_vertices = 3) out;
+layout(line_strip, max_vertices = 3) out;
 layout (location = 1) out vec3 vertnormal_world_fs;
 
 void main() {

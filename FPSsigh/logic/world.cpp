@@ -5,9 +5,14 @@
 
 
 World::World()
+    : objectPath(QString("./../FPSSigh/models/")),
+      worldObjects(QVector<WorldObject *>()),
+      loadedWorldObjects(QVector<WorldObject *>())
 {
-    worldObjects = QVector<WorldObject *>();
     initDefaultScene();
+
+    // Load non-scene objects
+    loadObject("character", "bullet");
 }
 
 
@@ -44,8 +49,18 @@ void World::getSimpleWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3
 }
 
 void World::getTessWorldObjects(QVector<QVector3D> &vertices, QVector<QVector3D> &normals) {
+//    qDebug() << "getTessWOs";
     for (WorldObject *obj : worldObjects) {
         obj->getTessArrays(vertices, normals);
+        for (Vertex *v : obj->vertices) {
+//            qDebug() << v->coords;
+        }
+    }
+}
+
+void World::updateWorld(long long time) {
+    for (WorldObject *wo : worldObjects) {
+        wo->update(time);
     }
 }
 

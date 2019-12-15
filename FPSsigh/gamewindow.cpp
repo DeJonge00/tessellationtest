@@ -2,10 +2,11 @@
 
 #include "gamewindow.h"
 #include "logic/gameloopthread.h"
+#include "logic/world.h"
 
 
 GameWindow::GameWindow(QWidget *Parent) : QOpenGLWidget(Parent),
-    mouseTracking(true)
+    mouseTracking(true), paused(false), running(false)
 {
     setEnabled(true);
     switchMouseEnabled();
@@ -34,6 +35,12 @@ void GameWindow::keyPressEvent(QKeyEvent* event) {
     if (event->key() == 'M') {
         switchMouseEnabled();
     }
+    if (event->key() == 'P') {
+        paused = !paused;
+    }
+    if (event->key() == 'Y') {
+        running = false;
+    }
     gameRenderer->gameCharacter->handleKeypress(event->key(), true);
 }
 
@@ -53,7 +60,13 @@ void GameWindow::keyReleaseEvent(QKeyEvent* event) {
 }
 
 void GameWindow::mousePressEvent(QMouseEvent* event) {
-    setFocus();
+    if (hasFocus()) {
+         gameRenderer->gameWorld->addBullet(gameRenderer->gameCharacter->position,
+                                            gameRenderer->gameCharacter->angleSide,
+                                            gameRenderer->gameCharacter->angleUp);
+    } else {
+        setFocus();
+    }
 }
 
 void GameWindow::wheelEvent(QWheelEvent* event) {

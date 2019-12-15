@@ -302,6 +302,159 @@
      <string>FPS: 0</string>
     </property>
    </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>835</y>
+      <width>171</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="controlsLayout">
+     <item>
+      <layout class="QVBoxLayout" name="controlsNameLayout">
+       <item>
+        <widget class="QLabel" name="controls">
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Controls:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="walking">
+         <property name="text">
+          <string>Walking:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="upDown">
+         <property name="text">
+          <string>Up/Down:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="looking">
+         <property name="text">
+          <string>Looking:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="shoot">
+         <property name="text">
+          <string>Shoot:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="respawn">
+         <property name="text">
+          <string>Respawn:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="bindMouse">
+         <property name="text">
+          <string>Bind mouse to screen</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="paused">
+         <property name="text">
+          <string>Pause:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="exit">
+         <property name="text">
+          <string>Exit:</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="controlsKeysLayout">
+       <item>
+        <widget class="QLabel" name="empty">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="walkingKeys">
+         <property name="text">
+          <string>WASD</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="upDownKeys">
+         <property name="text">
+          <string>SPACE/C</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lookingKey">
+         <property name="text">
+          <string>Mouse</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="shootKey">
+         <property name="text">
+          <string>Mouse1</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="respawnKey">
+         <property name="text">
+          <string>R</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="bindMouseKey">
+         <property name="text">
+          <string>M</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="pausedKey">
+         <property name="text">
+          <string>P</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="exitKey">
+         <property name="text">
+          <string>Y</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

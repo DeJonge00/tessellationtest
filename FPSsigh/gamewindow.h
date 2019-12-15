@@ -17,6 +17,8 @@ public:
     ~GameWindow();
 
     Renderer* gameRenderer;
+    bool paused;
+    bool running;
 
 protected:
     void initializeGL();

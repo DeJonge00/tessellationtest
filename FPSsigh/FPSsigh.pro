@@ -17,14 +17,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     gamewindow.cpp \
-    logic/Loading/objectloader.cpp \
+    logic/loading/characterloader.cpp \
+    logic/world_objects/bullet.cpp \
+    logic/loading/objectloader.cpp \
     logic/character.cpp \
     logic/chunk.cpp \
     logic/fpscounter.cpp \
     logic/gameloopthread.cpp \
-    logic/initscenes.cpp \
+    logic/loading/initscenes.cpp \
     logic/world.cpp \
-    logic/worldobject.cpp \
+    logic/world_objects/floor.cpp \
+    logic/world_objects/worldobject.cpp \
     main.cpp \
     mainwindow.cpp \
     rendering/renderer.cpp \
@@ -32,16 +35,19 @@ SOURCES += \
     rendering/tessellationpipeline.cpp
 
 HEADERS += \
+    common_functions.h \
     gamewindow.h \
+    logic/world_objects/bullet.h \
     logic/character.h \
     logic/chunk.h \
-    logic/face.h \
+    logic/object_structs/face.h \
     logic/fpscounter.h \
     logic/gameloopthread.h \
-    logic/halfedge.h \
-    logic/vertex.h \
+    logic/object_structs/halfedge.h \
+    logic/object_structs/vertex.h \
     logic/world.h \
-    logic/worldobject.h \
+    logic/world_objects/floor.h \
+    logic/world_objects/worldobject.h \
     mainwindow.h \
     rendering/renderer.h
 

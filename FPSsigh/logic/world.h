@@ -6,11 +6,11 @@
 #include <QVector>
 #include <QVector3D>
 
-#include "logic/worldobject.h"
-#include "logic/worldobject.h"
-#include "logic/vertex.h"
-#include "logic/halfedge.h"
-#include "logic/face.h"
+#include "logic/world_objects/worldobject.h"
+#include "logic/object_structs/vertex.h"
+#include "logic/object_structs/halfedge.h"
+#include "logic/object_structs/face.h"
+
 
 class World
 {
@@ -20,11 +20,22 @@ public:
     void getSimpleWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3D>& normals);
     void getTessWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3D>& normals);
 
-    void addScene(QString name);
+    QString objectPath;
+    // initscenes
+    void loadScene(QString name);
     void initDefaultScene();
+
+    // character
+//    void addCharacterObjects();
+    void addBullet(QVector3D location, float angleSide, float angleUp);
+
+    void updateWorld(long long time);
+    WorldObject* getLoadedObject(QString name);
+    void loadObject(QString dir_name, QString name);
 
 protected:
     QVector<WorldObject *> worldObjects;
+    QVector<WorldObject *> loadedWorldObjects;
 
 private:
     WorldObject* objectLoader(QString fileName, QString name);

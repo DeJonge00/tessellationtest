@@ -53,12 +53,10 @@ void Character::updateModelMatrix() {
 
 void Character::updateProjectionMatrix() {
     projectionMatrix.setToIdentity();
-    projectionMatrix.perspective(FoV, dispRatio, 0.2, 50.0);
+    projectionMatrix.perspective(FoV, dispRatio, 0.2, 200.0);
     projectionMatrix.rotate(angleSide, QVector3D(0, 1, 0));
     projectionMatrix.rotate(angleUp, getDirectionSide());
-
-
-    projectionMatrix.translate(position.x(), -position.y(), position.z());
+    projectionMatrix.translate(-position.x(), -position.y(), -position.z());
 }
 
 void Character::updateNormalMatrix() {
@@ -205,22 +203,22 @@ void Character::handleMouse(QPoint mousePos) {
 }
 
 void Character::positionForward(float n) {
-    position += getDirection() * n;
-    updateProjectionMatrix();
-}
-
-void Character::positionBack(float n) {
     position -= getDirection() * n;
     updateProjectionMatrix();
 }
 
+void Character::positionBack(float n) {
+    position += getDirection() * n;
+    updateProjectionMatrix();
+}
+
 void Character::positionLeft(float n) {
-    position -= getDirectionSide() * n;
+    position += getDirectionSide() * n;
     updateProjectionMatrix();
 }
 
 void Character::positionRight(float n) {
-    position += getDirectionSide() * n;
+    position -= getDirectionSide() * n;
     updateProjectionMatrix();
 }
 
