@@ -54,13 +54,13 @@ private:
     // Simple shader program
     QOpenGLShaderProgram *simpleShaderProgram;
     GLuint simpleVAO;
-    GLuint simpleCoordinatesBO, simpleNormalsBO;
+    GLuint simpleCoordinatesBO, simpleNormalsBO, simpleModeBO;
     unsigned int simpleIBOsize;
 
     // Tessellation shader program
     QOpenGLShaderProgram *tessShaderProgram;
     GLuint tessVAO;
-    GLuint tessCoordinatesBO, tessNormalsBO;
+    GLuint tessCoordinatesBO, tessNormalsBO, tessModeBO;
     unsigned int tessIBOsize;
 };
 

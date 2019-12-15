@@ -8,8 +8,8 @@ class Bullet : public WorldObject
 {
 public:
     Bullet(QVector3D direction, float speed);
-    Bullet(WorldObject* wo);
     Bullet() : Bullet(QVector3D(0, 1, 0), 1) {}
+
     virtual ~Bullet();
 
     bool update(long long time) override;

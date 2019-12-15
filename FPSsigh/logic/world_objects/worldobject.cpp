@@ -7,14 +7,18 @@
 WorldObject::WorldObject()
     : name(QString("")), vertices(QVector<Vertex *>()), normals(QVector<QVector3D *>()),
       faces(QVector<Face *>()), halfedges(QVector<HalfEdge *>()),
-      timeLastEdited(0), translation(QVector3D())
+      timeLastEdited(0), translation(QVector3D()), mode(0)
 {
 
 }
 
 WorldObject* WorldObject::copy() {
-    qDebug() << "Starting copy of WorldObject" << name;
     WorldObject* obj_new = new WorldObject();
+    copyOver(obj_new);
+    return obj_new;
+}
+
+void WorldObject::copyOver(WorldObject* obj_new) {
     std::map<unsigned int, HalfEdge *> halfEdgeMap = std::map<unsigned int, HalfEdge *>();
     std::map<unsigned int, Vertex *> vertexMap = std::map<unsigned int, Vertex *>();
     std::map<unsigned int, Face *> faceMap = std::map<unsigned int, Face *>();
@@ -34,6 +38,7 @@ WorldObject* WorldObject::copy() {
         he_new->twin = he_orig->twin;
         he_new->polygon = he_orig->polygon;
     }
+//    qDebug() << "Copied halfedges";
     for (Vertex *v_orig : vertices) {
         Vertex *v_new = new Vertex();
         v_new->coords = v_orig->coords;
@@ -47,6 +52,7 @@ WorldObject* WorldObject::copy() {
         obj_new->vertices.append(v_new);
         vertexMap[v_orig->index] = v_new;
     }
+//    qDebug() << "Copied vertices";
     for (Face *f_orig : faces) {
         Face *f_new = new Face();
         f_new->side = halfEdgeMap[f_orig->side->index];
@@ -57,6 +63,7 @@ WorldObject* WorldObject::copy() {
         obj_new->faces.append(f_new);
         faceMap[f_orig->index] = f_new;
     }
+//    qDebug() << "Copied faces";
     for (HalfEdge *he_new : obj_new->halfedges) {
         he_new->target = vertexMap[he_new->target->index];
         he_new->next = halfEdgeMap[he_new->next->index];
@@ -64,12 +71,10 @@ WorldObject* WorldObject::copy() {
         he_new->twin = halfEdgeMap[he_new->twin->index];
         he_new->polygon = faceMap[he_new->polygon->index];
     }
-
+    qDebug() << "Solved halfedges";
     obj_new->timeLastEdited = timeLastEdited;
     obj_new->translation = translation;
     obj_new->name = name + "_c";
-    qDebug() << "Returning new copioed object" << obj_new->name;
-    return obj_new;
 }
 
 double WorldObject::timeSinceLastEdit(long long time) {
@@ -83,33 +88,36 @@ double WorldObject::timeSinceLastEdit(long long time) {
     return dt;
 }
 
-// Returns true if big move happens, so the chunk can be updated
+// Returns true if (big) move happens, so the chunk can be updated
 bool WorldObject::update(long long time) {
     double t = timeSinceLastEdit(time);
-//    rotate(time, 0, 0);
     return false;
 }
 
-void WorldObject::getSimpleArrays(QVector<QVector3D>& vertices, QVector<QVector3D>& normals) {
+void WorldObject::getSimpleArrays(QVector<QVector3D>& vertices, QVector<QVector3D>& normals, QVector<unsigned int>& renderMode) {
     for (Face *f : faces) {
         if (f->val == 3) {
             HalfEdge *current = f->side;
             do {
                 vertices.append(current->target->coords);
                 normals.append(current->target->normal);
+                renderMode.append(mode);
                 current = current->next;
             } while (current != f->side);
         }
     }
 }
 
-void WorldObject::getTessArrays(QVector<QVector3D>& vertices, QVector<QVector3D>& normals) {
+void WorldObject::getTessArrays(QVector<QVector3D>& vertices, QVector<QVector3D>& normals, QVector<unsigned int>& renderMode) {
+//    qDebug() << "Starting getTessArrays";
     for (Face *f : faces) {
         if (f->val == 4) {
             HalfEdge *current = f->side;
             do {
+//                qDebug() << "::" << current->target->coords << current->target->normal << mode;
                 vertices.append(current->target->coords);
                 normals.append(current->target->normal);
+                renderMode.append(mode);
                 current = current->next;
             } while (current != f->side);
         }

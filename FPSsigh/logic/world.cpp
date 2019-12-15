@@ -3,6 +3,12 @@
 #include <QVector>
 #include <QVector3D>
 
+# define WORLD_MAX_X 15
+# define WORLD_MAX_Y 15
+# define WORLD_MAX_Z 15
+# define WORLD_MIN_X -15
+# define WORLD_MIN_Y -15
+# define WORLD_MIN_Z -15
 
 World::World()
     : objectPath(QString("./../FPSSigh/models/")),
@@ -16,51 +22,35 @@ World::World()
 }
 
 
-void World::getSimpleWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3D>& normals) {
-    float size = 1;
-    float middlex = 0;
-    float middley = 0;
-
-    float y = 0;
-    float floor_size = 15;
-
-    for (int nx = -floor_size; nx < floor_size; nx++) {
-        for (int nz = -floor_size; nz < floor_size; nz++) {
-            float x = middlex + nx*size;
-            float z = middley + nz*size;
-            vertices.append(QVector3D(x, y, z));
-            vertices.append(QVector3D(x+size, y, z));
-            vertices.append(QVector3D(x, y, z+size));
-
-            normals.append(QVector3D(0, 1, 0));
-            normals.append(QVector3D(0, 1, 0));
-            normals.append(QVector3D(0, 1, 0));
-
-            vertices.append(QVector3D(x+size, y, z));
-            vertices.append(QVector3D(x+size, y, z+size));
-            vertices.append(QVector3D(x, y, z+size));
-
-            normals.append(QVector3D(0, 1, 0));
-            normals.append(QVector3D(0, 1, 0));
-            normals.append(QVector3D(0, 1, 0));
-        }
+void World::getSimpleWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3D>& normals, QVector<unsigned int>& mode) {
+    for (WorldObject *obj : worldObjects) {
+        obj->getSimpleArrays(vertices, normals, mode);
     }
-
 }
 
-void World::getTessWorldObjects(QVector<QVector3D> &vertices, QVector<QVector3D> &normals) {
-//    qDebug() << "getTessWOs";
+void World::getTessWorldObjects(QVector<QVector3D> &vertices, QVector<QVector3D> &normals, QVector<unsigned int>& mode) {
     for (WorldObject *obj : worldObjects) {
-        obj->getTessArrays(vertices, normals);
-        for (Vertex *v : obj->vertices) {
-//            qDebug() << v->coords;
-        }
+        obj->getTessArrays(vertices, normals, mode);
     }
 }
 
 void World::updateWorld(long long time) {
     for (WorldObject *wo : worldObjects) {
         wo->update(time);
+        if (checkOutOfBounds(wo)) {
+            qDebug() << "Deleting" << wo->name;
+            worldObjects.removeOne(wo);
+        }
     }
 }
 
+bool World::checkOutOfBounds(WorldObject *wo) {
+    for (Vertex *v : wo->vertices) {
+        if ((v->coords.x() > WORLD_MAX_X) || (v->coords.x() < WORLD_MIN_X) ||
+                (v->coords.y() > WORLD_MAX_Y) || (v->coords.y() < WORLD_MIN_Y) ||
+                (v->coords.z() > WORLD_MAX_Z) || (v->coords.z() < WORLD_MIN_Z)) {
+            return true;
+        }
+    }
+    return false;
+}

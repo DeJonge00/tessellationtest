@@ -2,7 +2,7 @@
 
 GameLoopThread::GameLoopThread(MainWindow* mw, GameWindow *gw)
     : ui(mw), gameWindow(gw), fpsCounter(new FPScounter()),
-      maxFps(30)
+      maxFps(330)
 {
 
 }

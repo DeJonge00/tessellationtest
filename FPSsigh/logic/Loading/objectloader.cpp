@@ -13,6 +13,8 @@ WorldObject* World::getLoadedObject(QString name) {
             return wo->copy();
         }
     }
+    qDebug() << "Object" << name << "could not be copied, returning empty object";
+    return new WorldObject();
 }
 
 WorldObject* World::objectLoader(QString fileName, QString name) {
@@ -42,6 +44,7 @@ WorldObject* World::objectLoader(QString fileName, QString name) {
 
             object->vertices.append(new Vertex());
             object->vertices.last()->index = object->vertices.size() - 1;
+            object->vertices.last()->normal = QVector3D();
             object->vertices.last()->coords = QVector3D(lineParts.at(1).toFloat(),
                                                lineParts.at(2).toFloat(),
                                                 lineParts.at(3).toFloat());
@@ -67,7 +70,7 @@ WorldObject* World::objectLoader(QString fileName, QString name) {
                 ches.last()->target = object->vertices.at(split.at(0).toInt() - 1);
                 ches.last()->target->out = ches.last();
                 ches.last()->target->val++;
-                ches.last()->target->normal = *object->normals.at(split.at(2).toInt() - 1);
+                ches.last()->target->normal += *object->normals.at(split.at(2).toInt() - 1);
                 ches.last()->polygon = face;
                 ches.last()->index = i + object->halfedges.size();
             }
@@ -95,26 +98,27 @@ WorldObject* World::objectLoader(QString fileName, QString name) {
 
     // Add halfedge twins
     //  Setup
-    QVector<QVector<unsigned int>> potentialTwins = QVector<QVector<unsigned int>>();
-    for (int i = 0; i < object->vertices.size(); i++) {
-        potentialTwins.append(QVector<unsigned int>());
+    QVector<QVector<HalfEdge *>> potentialTwins = QVector<QVector<HalfEdge *>>();
+    for (int i = 0; i < object->halfedges.size(); i++) {
+        potentialTwins.append(QVector<HalfEdge *>());
     }
     //  Add potentials
     for (HalfEdge *he : object->halfedges) {
-        potentialTwins[he->prev->target->index].append(he->index);
+        potentialTwins[he->prev->target->index].append(he);
     }
     //  Search twins
     for (HalfEdge *he : object->halfedges) {
         if (!he->twin) {
-            for (unsigned int ind : potentialTwins[he->prev->target->index]) {
-                if (ind == he->target->index) {
-                    he->twin = object->halfedges.at(ind);
+            for (HalfEdge *potentialTwin : potentialTwins[he->target->index]) {
+                if (potentialTwin->target->index == he->prev->target->index) {
+                    he->twin = potentialTwin;
                     he->twin->twin = he;
                     break;
                 }
             }
         }
     }
+
     //  Account for boundaries
     for (HalfEdge *he : object->halfedges) {
         if (!he->twin) {
@@ -135,6 +139,11 @@ WorldObject* World::objectLoader(QString fileName, QString name) {
             he->next = nexts[he->target->index];
             he->next->prev = he;
         }
+    }
+
+    // Update vertex normals (unweighted for now)
+    for (Vertex *v : object->vertices) {
+        v->normal.normalize();
     }
 
     qDebug() << "Successfully loaded" << object->name;

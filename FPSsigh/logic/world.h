@@ -17,8 +17,8 @@ class World
 public:
     World();
 
-    void getSimpleWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3D>& normals);
-    void getTessWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3D>& normals);
+    void getSimpleWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3D>& normals, QVector<unsigned int>& mode);
+    void getTessWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3D>& normals, QVector<unsigned int>& mode);
 
     QString objectPath;
     // initscenes
@@ -40,6 +40,7 @@ protected:
 private:
     WorldObject* objectLoader(QString fileName, QString name);
     inline WorldObject* objectLoader(QString fileName) { return objectLoader(fileName, "Object"); };
+    bool checkOutOfBounds(WorldObject *wo);
 };
 
 #endif // WORLD_H

@@ -11,7 +11,8 @@ Renderer::Renderer()
       enableSimpleShader(true),
       enableTessShader(true),
       tessellationInner(1),
-      tessellationOuter(2)
+      tessellationOuter(2),
+      tessIBOsize(0), simpleIBOsize(0)
 {
     qDebug() << "Renderer constructor";
 
@@ -32,6 +33,7 @@ Renderer::Renderer()
 
     createShaderPrograms();
     createBuffers();
+    qDebug() << "Renderer constructed";
 }
 
 Renderer::~Renderer()

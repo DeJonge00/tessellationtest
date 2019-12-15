@@ -14,8 +14,8 @@ class WorldObject
 {
 public:
     WorldObject();
-    void getSimpleArrays(QVector<QVector3D>& vertices, QVector<QVector3D>& normals);
-    void getTessArrays(QVector<QVector3D>& vertices, QVector<QVector3D>& normals);
+    void getSimpleArrays(QVector<QVector3D>& vertices, QVector<QVector3D>& normals, QVector<unsigned int>& mode);
+    void getTessArrays(QVector<QVector3D>& vertices, QVector<QVector3D>& normals, QVector<unsigned int>& mode);
 
     void addFace(Face *f);
     void addVertex(Vertex *v);
@@ -40,8 +40,10 @@ public:
 
     long long timeLastEdited;
     QVector3D translation;
+    unsigned int mode;
 
     virtual WorldObject* copy();
+    void copyOver(WorldObject* wo);
 
 protected:
     double timeSinceLastEdit(long long time);

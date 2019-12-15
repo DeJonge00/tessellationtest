@@ -2,10 +2,12 @@
 
 layout(quads, equal_spacing, ccw) in;
 
-layout (location = 0) in vec3 vertcoords_world_tes[];
-layout (location = 1) in vec3 vertnormal_world_tes[];
+layout (location = 0) in vec3 vertcoords_tes[];
+layout (location = 1) in vec3 vertnormal_tes[];
+layout (location = 2) in uint vertmode_tes[];
 
-out vec3 vertnormal_world_geo;
+out vec3 vertnormal_geo;
+out uint vertmode_geo;
 
 
 vec3 interpolate(vec3 v0, vec3 v1, float w) {
@@ -20,24 +22,25 @@ vec3 interpolate2D(vec3 v0, vec3 v1, vec3 v2, vec3 v3, float w1, float w2) {
 
 void main()
 {
-    vec3 v0 = vertcoords_world_tes[0];
-    vec3 v1 = vertcoords_world_tes[1];
-    vec3 v2 = vertcoords_world_tes[2];
-    vec3 v3 = vertcoords_world_tes[3];
+    vec3 v0 = vertcoords_tes[0];
+    vec3 v1 = vertcoords_tes[1];
+    vec3 v2 = vertcoords_tes[2];
+    vec3 v3 = vertcoords_tes[3];
 
     vec3 p1 = mix(v1, v0, gl_TessCoord.x);
     vec3 p2 = mix(v2, v3, gl_TessCoord.x);
     gl_Position = vec4(mix(p1, p2, gl_TessCoord.y), 1);
 
 
-    v0 = vertnormal_world_tes[0];
-    v1 = vertnormal_world_tes[1];
-    v2 = vertnormal_world_tes[2];
-    v3 = vertnormal_world_tes[3];
+    v0 = vertnormal_tes[0];
+    v1 = vertnormal_tes[1];
+    v2 = vertnormal_tes[2];
+    v3 = vertnormal_tes[3];
 
     p1 = mix(v1, v0, gl_TessCoord.x);
     p2 = mix(v2, v3, gl_TessCoord.x);
     vec3 pr = mix(p1, p2, gl_TessCoord.y);
-    vertnormal_world_geo = pr;
+    vertnormal_geo = pr;
+    vertmode_geo = vertmode_tes[0];
 
 }

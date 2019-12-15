@@ -8,13 +8,11 @@
 //}
 
 void World::addBullet(QVector3D location, float angleSide, float angleUp) {
-    qDebug() << "Bullet updating";
-    Bullet *b = (Bullet *)getLoadedObject("bullet");
-
-    b->direction = CommonFunctions::angleToVector(angleSide, angleUp);
-    b->speed = 0.01;
-    b->scale(0.1);
-    b->rotate(fmod(angleSide + 180, 360), -angleUp, 0);
+    Bullet *b = new Bullet(CommonFunctions::angleToVector(angleSide, angleUp), 1);
+    getLoadedObject("bullet")->copyOver(b);
+    b->scale(0.05);
     b->translate(location);
+    b->rotate(fmod(angleSide + 180, 360), -angleUp, 0);
+    qDebug() << "Bullet ready";
     worldObjects.append(b);
 }

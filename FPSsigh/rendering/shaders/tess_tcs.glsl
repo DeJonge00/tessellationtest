@@ -2,14 +2,16 @@
 
 layout (vertices = 4) out;
 
-layout (location = 0) in vec3 vertcoords_world_tcs[];
-layout (location = 1) in vec3 vertnormal_world_tcs[];
+layout (location = 0) in vec3 vertcoords_tcs[];
+layout (location = 1) in vec3 vertnormal_tcs[];
+layout (location = 2) in uint vertmode_tcs[];
 
 uniform int tessellation_inner;
 uniform int tessellation_outer;
 
-layout (location = 0) out vec3 vertcoords_world_tes[];
-layout (location = 1) out vec3 vertnormal_world_tes[];
+layout (location = 0) out vec3 vertcoords_tes[];
+layout (location = 1) out vec3 vertnormal_tes[];
+layout (location = 2) out uint vertmode_tes[];
 
 
 void main()
@@ -24,7 +26,8 @@ void main()
         gl_TessLevelInner[1] = tessellation_outer;
     }
 
-    vertcoords_world_tes[gl_InvocationID] = vertcoords_world_tcs[gl_InvocationID];
-    vertnormal_world_tes[gl_InvocationID] = vertnormal_world_tcs[gl_InvocationID];
+    vertcoords_tes[gl_InvocationID] = vertcoords_tcs[gl_InvocationID];
+    vertnormal_tes[gl_InvocationID] = vertnormal_tcs[gl_InvocationID];
+    vertmode_tes[gl_InvocationID] = vertmode_tcs[gl_InvocationID];
     gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;
 }
