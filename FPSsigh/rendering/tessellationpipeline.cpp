@@ -74,6 +74,11 @@ void Renderer::renderQuads(bool uniformUpdateRequired) {
     }
 
     glBindVertexArray(tessVAO);
+    if (tessWireframeMode) {
+        glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+    } else {
+        glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
+    }
     glDrawArrays(GL_PATCHES, 0, tessIBOsize);
 
     glBindVertexArray(0);

@@ -228,12 +228,26 @@
       </widget>
      </item>
      <item>
+      <widget class="QCheckBox" name="simpleWireframe">
+       <property name="text">
+        <string>Simple shader wireframe</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QCheckBox" name="tessShaderCheckbox">
        <property name="text">
         <string>Tesselation shader</string>
        </property>
        <property name="checked">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="tessWireframe">
+       <property name="text">
+        <string>Tessellation shader wireframe</string>
        </property>
       </widget>
      </item>
@@ -249,7 +263,7 @@
         <number>1</number>
        </property>
        <property name="maximum">
-        <number>10</number>
+        <number>50</number>
        </property>
        <property name="singleStep">
         <number>1</number>
@@ -268,7 +282,7 @@
         <number>2</number>
        </property>
        <property name="maximum">
-        <number>10</number>
+        <number>50</number>
        </property>
        <property name="singleStep">
         <number>1</number>

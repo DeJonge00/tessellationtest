@@ -13,22 +13,19 @@ public:
     unsigned short val;
     unsigned int index;
     QVector3D normal;
+    bool tessValid;
 
     // Inline constructors
 
-    Face() {
-        side = nullptr;
-        val = 0;
-        index = 0;
-        normal = QVector3D();
-    }
-
-    Face(HalfEdge* fside, unsigned short fval, unsigned int findex) {
+    Face(HalfEdge* fside, unsigned short fval, unsigned int findex, bool tv) {
         side = fside;
         val = fval;
         index = findex;
         normal = QVector3D();
+        tessValid = tv;
     }
+
+    Face() : Face(nullptr, 0, 0, false) {}
 };
 
 #endif // FACE

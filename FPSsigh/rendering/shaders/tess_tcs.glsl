@@ -1,6 +1,11 @@
 #version 410 core
 
 layout (vertices = 4) out;
+// Order =
+//  2  3  5  6
+//  1  0  4  7
+// 15 12  8  9
+// 14 13 11 10
 
 layout (location = 0) in vec3 vertcoords_tcs[];
 layout (location = 1) in vec3 vertnormal_tcs[];

@@ -12,7 +12,8 @@ Renderer::Renderer()
       enableTessShader(true),
       tessellationInner(1),
       tessellationOuter(2),
-      tessIBOsize(0), simpleIBOsize(0)
+      tessIBOsize(0), simpleIBOsize(0),
+      simpleWireframeMode(false), tessWireframeMode(false)
 {
     qDebug() << "Renderer constructor";
 

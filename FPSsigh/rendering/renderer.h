@@ -30,6 +30,9 @@ public:
     int tessellationInner;
     int tessellationOuter;
 
+    bool simpleWireframeMode;
+    bool tessWireframeMode;
+
 private:
     void createShaderPrograms();
     void createSimpleShaderProgram();

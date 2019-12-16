@@ -45,6 +45,8 @@ public:
     virtual WorldObject* copy();
     void copyOver(WorldObject* wo);
 
+    void toLimitPositions();
+
 protected:
     double timeSinceLastEdit(long long time);
 };

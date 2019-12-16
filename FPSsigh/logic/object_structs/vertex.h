@@ -14,15 +14,9 @@ public:
     unsigned int index;
     unsigned short sharpness;
     QVector3D normal;
+    bool isEdge;
 
-    Vertex() {
-        coords = QVector3D();
-        out = nullptr;
-        val = 0;
-        index = 0;
-        sharpness = 0;
-        normal = QVector3D();
-    }
+    Vertex() : Vertex(QVector3D(), nullptr, 0, 0, QVector3D()) {}
 
     Vertex(QVector3D vcoords, HalfEdge* vout, unsigned short vval, unsigned int vindex, QVector3D vnormal, float vsharpness = 0) {
         coords = vcoords;
@@ -31,6 +25,7 @@ public:
         index = vindex;
         sharpness = vsharpness;
         normal = vnormal;
+        isEdge = false;
     }
 };
 

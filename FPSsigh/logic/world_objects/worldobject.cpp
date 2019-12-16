@@ -47,6 +47,7 @@ void WorldObject::copyOver(WorldObject* obj_new) {
         v_new->index = obj_new->vertices.size();
         v_new->sharpness = v_orig->sharpness;
         v_new->normal = v_orig->normal;
+        v_new->isEdge = v_orig->isEdge;
 
         obj_new->normals.append(&v_new->normal);
         obj_new->vertices.append(v_new);
@@ -59,6 +60,7 @@ void WorldObject::copyOver(WorldObject* obj_new) {
         f_new->val = f_orig->val;
         f_new->index = obj_new->faces.size();
         f_new->normal = f_orig->normal;
+        f_new->tessValid = f_orig->tessValid;
 
         obj_new->faces.append(f_new);
         faceMap[f_orig->index] = f_new;
@@ -96,25 +98,32 @@ bool WorldObject::update(long long time) {
 
 void WorldObject::getSimpleArrays(QVector<QVector3D>& vertices, QVector<QVector3D>& normals, QVector<unsigned int>& renderMode) {
     for (Face *f : faces) {
-        if (f->val == 3) {
-            HalfEdge *current = f->side;
+        if (!f->tessValid) {
+            HalfEdge *current = f->side->next;
             do {
+                vertices.append(f->side->target->coords);
+                normals.append(f->side->target->normal);
+                renderMode.append(mode);
+
                 vertices.append(current->target->coords);
                 normals.append(current->target->normal);
                 renderMode.append(mode);
+
                 current = current->next;
-            } while (current != f->side);
+
+                vertices.append(current->target->coords);
+                normals.append(current->target->normal);
+                renderMode.append(mode);
+            } while (current->next != f->side);
         }
     }
 }
 
 void WorldObject::getTessArrays(QVector<QVector3D>& vertices, QVector<QVector3D>& normals, QVector<unsigned int>& renderMode) {
-//    qDebug() << "Starting getTessArrays";
     for (Face *f : faces) {
-        if (f->val == 4) {
+        if (f->tessValid) {
             HalfEdge *current = f->side;
             do {
-//                qDebug() << "::" << current->target->coords << current->target->normal << mode;
                 vertices.append(current->target->coords);
                 normals.append(current->target->normal);
                 renderMode.append(mode);
@@ -146,5 +155,68 @@ void WorldObject::translate(QVector3D t) {
     translation += t;
     for (Vertex *v : vertices) {
         v->coords += t;
+    }
+}
+
+bool isRegularMeshVertex(Vertex v) {
+    HalfEdge *start = v.out, *current = v.out;
+    do {
+        if (current->polygon->val != 4) { return false; }
+        current = current->twin->next;
+    } while (current != start);
+    return true;
+}
+
+// Return average of all vertices of a face
+QVector3D calcFacePoint(HalfEdge* current) {
+    HalfEdge* h = current;
+    QVector3D f = QVector3D();
+    do {
+        f += current->target->coords;
+        h = h->next;
+    } while (h != current);
+    f /= current->polygon->val;
+    return f;
+}
+
+void WorldObject::toLimitPositions() {
+    QVector<QVector3D> newVertexCoords = QVector<QVector3D>();
+
+
+    // Calculate new position for each vertex
+    for (int i = 0; i < vertices.size(); i++) {
+        Vertex* currentVertex = vertices[i];
+
+        // Branch boundaries, regular meshpoints and other
+        if (currentVertex->isEdge) {
+            newVertexCoords.append(currentVertex->coords);
+        } else { // Irregular, non-boundary meshpoint == N-gon
+            float n = currentVertex->val;
+            QVector3D s = QVector3D();
+            HalfEdge* current = currentVertex->out;
+            do {
+                s += ((current->target->coords + currentVertex->coords) / 2);
+                s += calcFacePoint(current);
+                // Loop index
+                current = current->twin->next;
+            } while (current != currentVertex->out);
+
+            newVertexCoords.append((n-3)/(n+5) * currentVertex->coords + (4 / (n*(n+5)) * s));
+        }
+    }
+
+    // Set vertices new coords
+    for (int i = 0; i < newVertexCoords.size(); i++) {
+        vertices[i]->coords = newVertexCoords[i];
+    }
+
+    // Update normals
+    for (Vertex *v : vertices) {
+        v->normal = QVector3D();
+        HalfEdge *c = v->out;
+        do {
+            v->normal += c->target->coords;
+            c = c->twin->next;
+        } while (c != v->out);
     }
 }

@@ -9,13 +9,30 @@ void World::loadObject(QString dir_name, QString name) {
 
 WorldObject* World::getLoadedObject(QString name) {
     for (WorldObject* wo : loadedWorldObjects) {
-        if (!name.compare(wo->name)) {
+        if (name.compare(wo->name) == 0) {
             return wo->copy();
         }
     }
     qDebug() << "Object" << name << "could not be copied, returning empty object";
     return new WorldObject();
 }
+
+bool tessValid(Face *f) {
+    if (f->val != 4) {
+        return false;
+    }
+// If rendering with 16 quads becomes better
+//    HalfEdge *he = f->side;
+//    do {
+//        if (he->target->val != 4) {
+//            return false;
+//        }
+//        he = he->next;
+//    } while (he != f->side);
+    return true;
+}
+
+
 
 WorldObject* World::objectLoader(QString fileName, QString name) {
     qDebug() << "Loading object:" << fileName;
@@ -68,7 +85,7 @@ WorldObject* World::objectLoader(QString fileName, QString name) {
                 QStringList split = lineParts.at(i).split("/");
                 ches.append(new HalfEdge());
                 ches.last()->target = object->vertices.at(split.at(0).toInt() - 1);
-                ches.last()->target->out = ches.last();
+                ches.last()->target->out = ches.last(); // Needs to be updated later
                 ches.last()->target->val++;
                 ches.last()->target->normal += *object->normals.at(split.at(2).toInt() - 1);
                 ches.last()->polygon = face;
@@ -108,7 +125,7 @@ WorldObject* World::objectLoader(QString fileName, QString name) {
     }
     //  Search twins
     for (HalfEdge *he : object->halfedges) {
-        if (!he->twin) {
+        if (he->twin == nullptr) {
             for (HalfEdge *potentialTwin : potentialTwins[he->target->index]) {
                 if (potentialTwin->target->index == he->prev->target->index) {
                     he->twin = potentialTwin;
@@ -121,32 +138,41 @@ WorldObject* World::objectLoader(QString fileName, QString name) {
 
     //  Account for boundaries
     for (HalfEdge *he : object->halfedges) {
-        if (!he->twin) {
+        if (he->twin == nullptr) {
             he->twin = new HalfEdge();
             he->twin->target = he->prev->target;
             he->target->val++;
+            he->twin->target->isEdge = true;
         }
     }
     //  Search for nexts
     std::map<unsigned int, HalfEdge *> nexts = std::map<unsigned int, HalfEdge *>();
     for (HalfEdge *he : object->halfedges) {
-        if (!he->next) {
+        if (he->next == nullptr) {
             nexts[he->twin->target->index] = he;
         }
     }
     for (HalfEdge *he : object->halfedges) {
-        if (!he->next) {
+        if (he->next == nullptr) {
             he->next = nexts[he->target->index];
             he->next->prev = he;
         }
     }
 
-    // Update vertex normals (unweighted for now)
+    // Update vertex normals (unweighted for now) and outs
     for (Vertex *v : object->vertices) {
         v->normal.normalize();
+        v->out = v->out->next;
     }
 
-    qDebug() << "Successfully loaded" << object->name;
+    // Check if faces are tessellation worthy
+    for (Face *f : object->faces) {
+        f->tessValid = tessValid(f);
+//        qDebug() << f->tessValid;
+//        f->tessValid = false;
+    }
+
+    qDebug() << "Successfully loaded" << object->name << object->faces.size();
     return object;
 }
 
