@@ -39,6 +39,8 @@ public:
     virtual bool update(long long time);
 
     long long timeLastEdited;
+    float size;
+    QVector3D rotation;
     QVector3D translation;
     unsigned int mode;
 
@@ -49,6 +51,7 @@ public:
 
 protected:
     double timeSinceLastEdit(long long time);
+
 };
 
 #endif // WORLDOBJECT_H

@@ -27,29 +27,29 @@ void World::initDefaultScene() {
     floor->mode = RENDERMODE_BLAND;
     worldObjects.append(floor);
 
-    WorldObject* skybox = getLoadedObject("cube");
-    skybox->name = QString("skybox");
-    skybox->scale(15);
-    skybox->mode = RENDERMODE_NORMAL;
-    worldObjects.append(skybox);
+//    WorldObject* skybox = getLoadedObject("cube");
+//    skybox->name = QString("skybox");
+//    skybox->scale(15);
+//    skybox->mode = RENDERMODE_NORMAL;
+//    worldObjects.append(skybox);
 
-    WorldObject* cube = getLoadedObject("cube");
-    cube->toLimitPositions();
+    WorldObject* cube = getLoadedObject("opencube");
+//    cube->toLimitPositions();
     cube->scale(1);
-    cube->translate(QVector3D(-3, 1, -2));
+    cube->translate(QVector3D(-4, 2, -2));
     cube->mode = RENDERMODE_NORMAL;
     worldObjects.append(cube);
 
     WorldObject* tower = getLoadedObject("tower");
 //    tower->toLimitPositions();
     tower->mode = RENDERMODE_NORMAL;
-    tower->translate(QVector3D(0, 3, 0));
+    tower->translate(QVector3D(1, 3, 0));
     worldObjects.append(tower);
 
-//    WorldObject* tower2 = getLoadedObject("tower");
-//    tower2->mode = RENDERMODE_NORMAL;
-//    tower2->translate(QVector3D(2, 1, -1));
-//    worldObjects.append(tower2);
+    WorldObject* tower2 = getLoadedObject("tower");
+    tower2->mode = RENDERMODE_NORMAL;
+    tower2->translate(QVector3D(-1, 3, 0));
+    worldObjects.append(tower2);
 
     WorldObject* sphere = getLoadedObject("sphere");
     sphere->mode = RENDERMODE_NORMAL;

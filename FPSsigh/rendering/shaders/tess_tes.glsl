@@ -40,6 +40,18 @@ Point bicubicInterpolate (Point p00, Point p01, Point p10, Point p11, float x, f
     return cubicInterpolate(p0, p1, y);
 }
 
+vec3 cosineInterpolate(vec3 y1, vec3 y2, float mu)
+{
+   float mu2 = (1-cos(mu*3.14159265358979323846))/2;
+   return (y1*(1-mu2)+y2*mu2);
+}
+
+vec3 biCosineInterpolate(vec3 v0, vec3 v1, vec3 v2, vec3 v3, float x, float y) {
+    vec3 r0 = cosineInterpolate(v0, v1, x);
+    vec3 r1 = cosineInterpolate(v3, v2, x);
+    return cosineInterpolate(r0, r1, y);
+}
+
 // ---
 
 void main()
@@ -62,6 +74,10 @@ void main()
         Point p = bicubicInterpolate(Point(v0, n0), Point(v1, n1), Point(v2, n2), Point(v3, n3), y, x);
         gl_Position = vec4(p.pos, 1);
         vertnormal_geo = p.nor;
+    } else if (false) {
+        // Cosine interpolation
+        gl_Position = vec4(biCosineInterpolate(v0, v1, v2, v3, x, y), 1);
+        vertnormal_geo = biCosineInterpolate(n0, n1, n2, n3, x, y);
     } else {
         // Bilinear interpolation
         vec3 p1 = mix(v1, v0, x);
