@@ -15,6 +15,7 @@ out uint vertmode_geo;
 
 uniform int tessellation_inner;
 uniform int tessellation_outer;
+uniform bool bicubic_interpolation;
 
 struct Point
 {
@@ -55,7 +56,6 @@ Point bicubicInterpolate (Point p00, Point p01, Point p10, Point p11, float x, f
 
 void main()
 {
-    int mode = 1;
     vec3 v0 = vertcoords_tes[0];
     vec3 v1 = vertcoords_tes[1];
     vec3 v2 = vertcoords_tes[2];
@@ -69,7 +69,7 @@ void main()
     float x = gl_TessCoord.x;
     float y = gl_TessCoord.y;
 
-    if (mode == 1) {
+    if (false) {
         // Bicubic interpolation
         Point p = bicubicInterpolate(Point(v0, n0), Point(v1, n1), Point(v2, n2), Point(v3, n3), y, x);
         gl_Position = vec4(p.pos, 1);

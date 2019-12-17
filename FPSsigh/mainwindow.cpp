@@ -117,3 +117,8 @@ void MainWindow::on_tessWireframe_stateChanged(int value)
 {
     ui->GameWidget->gameRenderer->tessWireframeMode = value == 2;
 }
+
+void MainWindow::on_bicubicInterpolation_stateChanged(int value)
+{
+    ui->GameWidget->gameRenderer->bicubicInterpolation = value == 2;
+}

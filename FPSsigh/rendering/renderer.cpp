@@ -13,7 +13,8 @@ Renderer::Renderer()
       tessellationInner(1),
       tessellationOuter(2),
       tessIBOsize(0), simpleIBOsize(0),
-      simpleWireframeMode(false), tessWireframeMode(false)
+      simpleWireframeMode(false), tessWireframeMode(false),
+      bicubicInterpolation(false)
 {
     qDebug() << "Renderer constructor";
 

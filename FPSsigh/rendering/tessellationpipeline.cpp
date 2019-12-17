@@ -62,6 +62,7 @@ void Renderer::updateTessUniforms() {
     tessShaderProgram->setUniformValue("tessellation_inner", tessellationInner);
     tessShaderProgram->setUniformValue("tessellation_outer", tessellationOuter);
     simpleShaderProgram->setUniformValue("player_position", gameCharacter->position);
+    simpleShaderProgram->setUniformValue("bicubic_interpolation", bicubicInterpolation);
     simpleShaderProgram->setUniformValue("scale", scale);
 }
 

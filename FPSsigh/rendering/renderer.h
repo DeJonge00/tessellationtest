@@ -33,6 +33,8 @@ public:
     bool simpleWireframeMode;
     bool tessWireframeMode;
 
+    bool bicubicInterpolation;
+
 private:
     void createShaderPrograms();
     void createSimpleShaderProgram();
