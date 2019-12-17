@@ -120,6 +120,8 @@ void Character::changeRotationAngleX(float angle) {
 
 void Character::changeRotationAngleY(float angle) {
     angleUp = fmod(360+angleUp + angle, 360);
+    if (angleUp > 180 && angleUp < 270) { angleUp = 270; } // Restrict down
+    if (angleUp > 90 && angleUp < 180) { angleUp = 90; } // Restrict up
     updateProjectionMatrix();
 }
 

@@ -80,6 +80,7 @@ void GameWindow::mouseMoveEvent(QMouseEvent *event) {
         float xm = pos().x() + width()/2;
         float ym = pos().y() + height()/2;
         gameRenderer->gameCharacter->handleMouse(QPoint(x - xm, y - ym));
+        gameRenderer->uniformUpdateRequired = true;
         QCursor::setPos(xm, ym);
     }
 }
