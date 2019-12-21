@@ -47,7 +47,9 @@ void World::initDefaultScene() {
     tower->translate(QVector3D(1, 3, 0));
     worldObjects.append(tower);
 
-    WorldObject* tower2 = getLoadedObject("tower");
+    RotatingObject* tower2 = new RotatingObject();
+    getLoadedObject("tower")->copyOver(tower2);
+//    WorldObject* tower2 = getLoadedObject("tower");
     tower2->mode = RENDERMODE_NORMAL;
     tower2->translate(QVector3D(-1, 3, 0));
     worldObjects.append(tower2);

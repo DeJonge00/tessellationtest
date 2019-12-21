@@ -13,7 +13,7 @@ RotatingObject* RotatingObject::copy() {
 }
 
 bool RotatingObject::update(long long time) {
-    double scale = timeSinceLastEdit(time) / 1000000;
+    double scale = timeSinceLastEdit(time) / 10000;
     rotate(speed*scale, 0, 0);
     return false;
 }
