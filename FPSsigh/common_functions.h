@@ -2,6 +2,7 @@
 #define COMMON_FUNCTIONS_H
 
 #include <QMatrix4x4>
+#include "math.h"
 
 # define PI 3.14159265358979323846
 

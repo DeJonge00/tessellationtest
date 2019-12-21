@@ -14,8 +14,11 @@ class WorldObject
 {
 public:
     WorldObject();
-    void getSimpleArrays(QVector<QVector3D>& vertices, QVector<QVector3D>& normals, QVector<unsigned int>& mode);
-    void getTessArrays(QVector<QVector3D>& vertices, QVector<QVector3D>& normals, QVector<unsigned int>& mode);
+    QVector<QVector3D> getSimpleVertices();
+    QVector<QVector3D> getSimpleNormals();
+
+    QVector<QVector3D> getTessVertices();
+    QVector<QVector3D> getTessNormals();
 
     void addFace(Face *f);
     void addVertex(Vertex *v);

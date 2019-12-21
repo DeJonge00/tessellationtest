@@ -2,6 +2,7 @@
 
 #include "logic/world.h"
 #include "logic/world_objects/floor.h"
+#include "logic/world_objects/rotatingobject.h"
 
 # define RENDERMODE_BLAND 0
 # define RENDERMODE_NORMAL 1
@@ -27,11 +28,11 @@ void World::initDefaultScene() {
     floor->mode = RENDERMODE_BLAND;
     worldObjects.append(floor);
 
-//    WorldObject* skybox = getLoadedObject("cube");
-//    skybox->name = QString("skybox");
-//    skybox->scale(15);
-//    skybox->mode = RENDERMODE_NORMAL;
-//    worldObjects.append(skybox);
+    WorldObject* skybox = getLoadedObject("cube");
+    skybox->name = QString("skybox");
+    skybox->scale(15);
+    skybox->mode = RENDERMODE_NORMAL;
+    worldObjects.append(skybox);
 
     WorldObject* cube = getLoadedObject("opencube");
 //    cube->toLimitPositions();
@@ -56,9 +57,13 @@ void World::initDefaultScene() {
     sphere->translate(QVector3D(-1, 1, -1));
     worldObjects.append(sphere);
 
-//    WorldObject* monkey = getLoadedObject("monkey");
-//    monkey->mode = RENDERMODE_NORMAL;
-//    monkey->scale(1.5);
-//    monkey->translate(QVector3D(7, 2, 2));
-//    worldObjects.append(monkey);
+//    RotatingObject* monkey = new RotatingObject();
+//    qDebug() << "Monkey getloaded";
+//    getLoadedObject("monkey")->copyOver(monkey);
+//    qDebug() << "Monkey loaded";
+    WorldObject* monkey = getLoadedObject("monkey");
+    monkey->mode = RENDERMODE_NORMAL;
+    monkey->scale(1.5);
+    monkey->translate(QVector3D(7, 2, 2));
+    worldObjects.append(monkey);
 }

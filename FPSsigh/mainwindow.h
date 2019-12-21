@@ -48,6 +48,8 @@ private slots:
 
     void on_bicubicInterpolation_stateChanged(int arg1);
 
+    void on_phase_valueChanged(double arg1);
+
 private:
     Ui::MainWindow *ui;
     GameLoopThread* gameLoopThread;

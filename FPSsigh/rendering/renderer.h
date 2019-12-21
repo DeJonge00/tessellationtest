@@ -44,13 +44,11 @@ private:
     void createSimpleBuffers();
     void createTessBuffers();
 
-    void updateBuffers();
-    void updateSimpleBuffers();
-    void updateTessBuffers();
+    void updateSimpleBuffers(WorldObject* wo);
+    void updateTessBuffers(WorldObject* wo);
 
-    void updateUniforms();
-    void updateSimpleUniforms();
-    void updateTessUniforms();
+    void updateSimpleUniforms(WorldObject* wo);
+    void updateTessUniforms(WorldObject* wo);
 
     void renderSimpleObjects(bool uniformUpdateRequired);
     void renderQuads(bool uniformUpdateRequired);

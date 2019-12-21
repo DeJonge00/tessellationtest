@@ -17,9 +17,6 @@ class World
 public:
     World();
 
-    void getSimpleWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3D>& normals, QVector<unsigned int>& mode);
-    void getTessWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3D>& normals, QVector<unsigned int>& mode);
-
     QString objectPath;
     // initscenes
     void loadScene(QString name);
@@ -32,9 +29,9 @@ public:
     void updateWorld(long long time);
     WorldObject* getLoadedObject(QString name);
     void loadObject(QString dir_name, QString name);
+    QVector<WorldObject *> worldObjects;
 
 protected:
-    QVector<WorldObject *> worldObjects;
     QVector<WorldObject *> loadedWorldObjects;
 
 private:

@@ -8,10 +8,8 @@ layout(quads, equal_spacing, ccw) in;
 // 14 13 11 10
 layout (location = 0) in vec3 vertcoords_tes[];
 layout (location = 1) in vec3 vertnormal_tes[];
-layout (location = 2) in uint vertmode_tes[];
 
 out vec3 vertnormal_geo;
-out uint vertmode_geo;
 
 uniform int tessellation_inner;
 uniform int tessellation_outer;
@@ -74,7 +72,7 @@ void main()
         Point p = bicubicInterpolate(Point(v0, n0), Point(v1, n1), Point(v2, n2), Point(v3, n3), y, x);
         gl_Position = vec4(p.pos, 1);
         vertnormal_geo = p.nor;
-    } else if (false) {
+    } else if (true) {
         // Cosine interpolation
         gl_Position = vec4(biCosineInterpolate(v0, v1, v2, v3, x, y), 1);
         vertnormal_geo = biCosineInterpolate(n0, n1, n2, n3, x, y);
@@ -89,5 +87,4 @@ void main()
         vec3 pr = mix(p1, p2, y);
         vertnormal_geo = pr;
     }
-    vertmode_geo = vertmode_tes[0];
 }

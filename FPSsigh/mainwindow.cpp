@@ -122,3 +122,8 @@ void MainWindow::on_bicubicInterpolation_stateChanged(int value)
 {
     ui->GameWidget->gameRenderer->bicubicInterpolation = value == 2;
 }
+
+void MainWindow::on_phase_valueChanged(double arg1)
+{
+
+}

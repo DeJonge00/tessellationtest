@@ -21,19 +21,6 @@ World::World()
     loadObject("character", "bullet");
 }
 
-
-void World::getSimpleWorldObjects(QVector<QVector3D>& vertices, QVector<QVector3D>& normals, QVector<unsigned int>& mode) {
-    for (WorldObject *obj : worldObjects) {
-        obj->getSimpleArrays(vertices, normals, mode);
-    }
-}
-
-void World::getTessWorldObjects(QVector<QVector3D> &vertices, QVector<QVector3D> &normals, QVector<unsigned int>& mode) {
-    for (WorldObject *obj : worldObjects) {
-        obj->getTessArrays(vertices, normals, mode);
-    }
-}
-
 void World::updateWorld(long long time) {
     for (WorldObject *wo : worldObjects) {
         wo->update(time);

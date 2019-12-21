@@ -1,4 +1,5 @@
 #include "gameloopthread.h"
+#include "math.h"
 
 GameLoopThread::GameLoopThread(MainWindow* mw, GameWindow *gw)
     : ui(mw), gameWindow(gw), fpsCounter(new FPScounter()),

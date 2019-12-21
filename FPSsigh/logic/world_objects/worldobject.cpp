@@ -73,10 +73,10 @@ void WorldObject::copyOver(WorldObject* obj_new) {
         he_new->twin = halfEdgeMap[he_new->twin->index];
         he_new->polygon = faceMap[he_new->polygon->index];
     }
-    qDebug() << "Solved halfedges";
     obj_new->timeLastEdited = timeLastEdited;
     obj_new->translation = translation;
     obj_new->name = name + "_c";
+    qDebug() << "Copied over" << obj_new->name;
 }
 
 double WorldObject::timeSinceLastEdit(long long time) {
@@ -96,42 +96,66 @@ bool WorldObject::update(long long time) {
     return false;
 }
 
-void WorldObject::getSimpleArrays(QVector<QVector3D>& vertices, QVector<QVector3D>& normals, QVector<unsigned int>& renderMode) {
+QVector<QVector3D> WorldObject::getSimpleVertices() {
+    QVector<QVector3D> vertices = QVector<QVector3D>();
     for (Face *f : faces) {
         if (!f->tessValid) {
             HalfEdge *current = f->side->next;
             do {
                 vertices.append(f->side->target->coords);
-                normals.append(f->side->target->normal);
-                renderMode.append(mode);
-
                 vertices.append(current->target->coords);
-                normals.append(current->target->normal);
-                renderMode.append(mode);
-
                 current = current->next;
-
                 vertices.append(current->target->coords);
-                normals.append(current->target->normal);
-                renderMode.append(mode);
             } while (current->next != f->side);
         }
     }
+    return vertices;
 }
 
-void WorldObject::getTessArrays(QVector<QVector3D>& vertices, QVector<QVector3D>& normals, QVector<unsigned int>& renderMode) {
+QVector<QVector3D> WorldObject::getSimpleNormals() {
+    QVector<QVector3D> normals = QVector<QVector3D>();
+    for (Face *f : faces) {
+        if (!f->tessValid) {
+            HalfEdge *current = f->side->next;
+            do {
+                normals.append(f->side->target->normal);
+                normals.append(current->target->normal);
+                current = current->next;
+                normals.append(current->target->normal);
+            } while (current->next != f->side);
+        }
+    }
+    return normals;
+}
+
+QVector<QVector3D> WorldObject::getTessVertices() {
+    QVector<QVector3D> vertices = QVector<QVector3D>();
     for (Face *f : faces) {
         if (f->tessValid) {
             HalfEdge *current = f->side;
             do {
                 vertices.append(current->target->coords);
-                normals.append(current->target->normal);
-                renderMode.append(mode);
                 current = current->next;
             } while (current != f->side);
         }
     }
+    return vertices;
 }
+
+QVector<QVector3D> WorldObject::getTessNormals() {
+    QVector<QVector3D> normals = QVector<QVector3D>();
+    for (Face *f : faces) {
+        if (f->tessValid) {
+            HalfEdge *current = f->side;
+            do {
+                normals.append(current->target->normal);
+                current = current->next;
+            } while (current != f->side);
+        }
+    }
+    return normals;
+}
+
 
 // Always scale and rotate before translating
 void WorldObject::scale(float s) {
@@ -142,6 +166,7 @@ void WorldObject::scale(float s) {
 
 void WorldObject::rotate(float x, float y, float z) {
     if (vertices.size() > 100) { return; }
+    rotation = CommonFunctions::rotateVectorByAngles(rotation, x, y);
     for (Vertex *v : vertices) {
         QVector3D t = translation;
         translate(-t);
@@ -153,9 +178,9 @@ void WorldObject::rotate(float x, float y, float z) {
 
 void WorldObject::translate(QVector3D t) {
     translation += t;
-    for (Vertex *v : vertices) {
-        v->coords += t;
-    }
+//    for (Vertex *v : vertices) {
+//        v->coords += t;
+//    }
 }
 
 bool isRegularMeshVertex(Vertex v) {

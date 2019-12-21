@@ -27,6 +27,7 @@ SOURCES += \
     logic/loading/initscenes.cpp \
     logic/world.cpp \
     logic/world_objects/floor.cpp \
+    logic/world_objects/rotatingobject.cpp \
     logic/world_objects/worldobject.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -47,6 +48,7 @@ HEADERS += \
     logic/object_structs/vertex.h \
     logic/world.h \
     logic/world_objects/floor.h \
+    logic/world_objects/rotatingobject.h \
     logic/world_objects/worldobject.h \
     mainwindow.h \
     rendering/renderer.h
