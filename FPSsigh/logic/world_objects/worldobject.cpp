@@ -7,7 +7,8 @@
 WorldObject::WorldObject()
     : name(QString("")), vertices(QVector<Vertex *>()), normals(QVector<QVector3D *>()),
       faces(QVector<Face *>()), halfedges(QVector<HalfEdge *>()),
-      timeLastEdited(0), translation(QVector3D()), mode(0)
+      timeLastEdited(0), translation(QVector3D()), mode(0),
+      phase(0), phaseType(0), phaseSpeed(1), phaseStrength(1)
 {
 
 }
@@ -75,6 +76,9 @@ void WorldObject::copyOver(WorldObject* obj_new) {
     }
     obj_new->timeLastEdited = timeLastEdited;
     obj_new->translation = translation;
+    obj_new->rotation = rotation;
+    obj_new->phase = phase;
+    obj_new->phaseSpeed = phaseSpeed;
     obj_new->name = name + "_c";
     qDebug() << "Copied over" << obj_new->name;
 }
@@ -92,7 +96,8 @@ double WorldObject::timeSinceLastEdit(long long time) {
 
 // Returns true if (big) move happens, so the chunk can be updated
 bool WorldObject::update(long long time) {
-    double t = timeSinceLastEdit(time);
+    double scale = timeSinceLastEdit(time) / 10000;
+    phase = fmod(phase + (phaseSpeed * scale), 1);
     return false;
 }
 

@@ -8,6 +8,10 @@
 # define RENDERMODE_NORMAL 1
 # define RENDERMODE_DOT_PLAYER 2
 
+# define PHASETYPE_BLAND 0
+# define PHASETYPE_BEATING 1
+# define PHASETYPE_HOVER 2
+
 
 void World::loadScene(QString name) {
 //    loadObject(QString("scene1"), QString("tower"));
@@ -36,6 +40,9 @@ void World::initDefaultScene() {
 
     WorldObject* cube = getLoadedObject("opencube");
 //    cube->toLimitPositions();
+    cube->phaseType = PHASETYPE_BEATING;
+    cube->phaseSpeed = 0.01;
+    cube->phaseStrength = 0.1;
     cube->scale(1);
     cube->translate(QVector3D(-4, 2, -2));
     cube->mode = RENDERMODE_NORMAL;
@@ -56,6 +63,9 @@ void World::initDefaultScene() {
 
     WorldObject* sphere = getLoadedObject("sphere");
     sphere->mode = RENDERMODE_NORMAL;
+    sphere->phaseType = PHASETYPE_HOVER;
+    sphere->phaseSpeed = 0.001;
+    sphere->phaseStrength = 0.1;
     sphere->translate(QVector3D(-1, 1, -1));
     worldObjects.append(sphere);
 

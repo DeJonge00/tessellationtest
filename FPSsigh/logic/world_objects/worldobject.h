@@ -52,9 +52,13 @@ public:
 
     void toLimitPositions();
 
+    float phase;
+    int phaseType;
+    float phaseSpeed;
+    float phaseStrength;
+
 protected:
     double timeSinceLastEdit(long long time);
-
 };
 
 #endif // WORLDOBJECT_H

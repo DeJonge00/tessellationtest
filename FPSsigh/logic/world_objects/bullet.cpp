@@ -23,7 +23,6 @@ Bullet* Bullet::copy() {
 }
 
 bool Bullet::update(long long time) {
-//    qDebug() << direction << speed << translation << vertices.size();
     double scale = timeSinceLastEdit(time) / 1000000;
     translate(scale * speed * direction);
     return true;

@@ -48,6 +48,11 @@ void Renderer::updateSimpleUniforms(WorldObject *wo) {
     simpleShaderProgram->setUniformValue("mode", wo->mode);
 //    simpleShaderProgram->setUniformValue("rotation", wo->rotation);
     simpleShaderProgram->setUniformValue("translation", wo->translation);
+    simpleShaderProgram->setUniformValue("phase_type", wo->phaseType);
+    if (wo->phaseType) {
+        simpleShaderProgram->setUniformValue("phase", wo->phase);
+        simpleShaderProgram->setUniformValue("phase_strength", wo->phaseStrength);
+    }
 }
 
 void Renderer::renderSimpleObjects(bool uniformUpdateRequired) {

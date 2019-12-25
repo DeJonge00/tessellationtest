@@ -2,7 +2,7 @@
 
 void Renderer::createTessShaderProgram() {
     tessShaderProgram = new QOpenGLShaderProgram();
-    tessShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/tess/rendering/shaders/tess_vs.glsl");
+    tessShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/simple/rendering/shaders/simple_vs.glsl");
     tessShaderProgram->addShaderFromSourceFile(QOpenGLShader::TessellationControl, ":/tess/rendering/shaders/tess_tcs.glsl");
     tessShaderProgram->addShaderFromSourceFile(QOpenGLShader::TessellationEvaluation, ":/tess/rendering/shaders/tess_tes.glsl");
     tessShaderProgram->addShaderFromSourceFile(QOpenGLShader::Geometry, ":/tess/rendering/shaders/tess_geo.glsl");
@@ -55,6 +55,11 @@ void Renderer::updateTessUniforms(WorldObject* wo) {
     tessShaderProgram->setUniformValue("scale", scale);
     tessShaderProgram->setUniformValue("mode", wo->mode);
     tessShaderProgram->setUniformValue("translation", wo->translation);
+    tessShaderProgram->setUniformValue("phase_type", wo->phaseType);
+    if (wo->phaseType != 0) {
+        tessShaderProgram->setUniformValue("phase", wo->phase);
+        tessShaderProgram->setUniformValue("phase_strength", wo->phaseStrength);
+    }
 }
 
 void Renderer::renderQuads(bool uniformUpdateRequired) {
