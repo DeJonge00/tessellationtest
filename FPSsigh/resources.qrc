@@ -1,13 +1,13 @@
 <RCC>
     <qresource prefix="/simple">
-        <file>rendering/shaders/simple_vs.glsl</file>
         <file>rendering/shaders/fs.glsl</file>
+        <file>rendering/shaders/vs.glsl</file>
     </qresource>
     <qresource prefix="/tess">
         <file>rendering/shaders/tess_tcs.glsl</file>
         <file>rendering/shaders/tess_tes.glsl</file>
-        <file>rendering/shaders/tess_vs.glsl</file>
         <file>rendering/shaders/tess_geo.glsl</file>
         <file>rendering/shaders/fs.glsl</file>
+        <file>rendering/shaders/vs.glsl</file>
     </qresource>
 </RCC>

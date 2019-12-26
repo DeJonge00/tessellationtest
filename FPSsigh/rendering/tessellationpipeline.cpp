@@ -2,7 +2,7 @@
 
 void Renderer::createTessShaderProgram() {
     tessShaderProgram = new QOpenGLShaderProgram();
-    tessShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/simple/rendering/shaders/simple_vs.glsl");
+    tessShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/tess/rendering/shaders/vs.glsl");
     tessShaderProgram->addShaderFromSourceFile(QOpenGLShader::TessellationControl, ":/tess/rendering/shaders/tess_tcs.glsl");
     tessShaderProgram->addShaderFromSourceFile(QOpenGLShader::TessellationEvaluation, ":/tess/rendering/shaders/tess_tes.glsl");
     tessShaderProgram->addShaderFromSourceFile(QOpenGLShader::Geometry, ":/tess/rendering/shaders/tess_geo.glsl");
@@ -62,7 +62,7 @@ void Renderer::updateTessUniforms(WorldObject* wo) {
     }
 }
 
-void Renderer::renderQuads(bool uniformUpdateRequired) {
+void Renderer::renderQuads() {
     tessShaderProgram->bind();
 
     glBindVertexArray(tessVAO);

@@ -161,6 +161,15 @@ QVector<QVector3D> WorldObject::getTessNormals() {
     return normals;
 }
 
+QVector<QVector3D> WorldObject::getNormals() {
+    QVector<QVector3D> normal_coords = QVector<QVector3D>();
+    for (Vertex* v : vertices) {
+        normal_coords.append(v->coords);
+        normal_coords.append(v->coords + v->normal);
+    }
+    return normal_coords;
+}
+
 
 // Always scale and rotate before translating
 void WorldObject::scale(float s) {

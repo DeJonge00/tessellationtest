@@ -25,6 +25,7 @@ public:
 
     void render();
     bool enableSimpleShader;
+    bool enableLineShader;
     bool enableTessShader;
 
     int tessellationInner;
@@ -39,19 +40,24 @@ private:
     void createShaderPrograms();
     void createSimpleShaderProgram();
     void createTessShaderProgram();
+    void createLineShaderProgram();
 
     void createBuffers();
     void createSimpleBuffers();
     void createTessBuffers();
+    void createLineBuffers();
 
     void updateSimpleBuffers(WorldObject* wo);
     void updateTessBuffers(WorldObject* wo);
+    void updateLineBuffers(WorldObject* wo);
 
     void updateSimpleUniforms(WorldObject* wo);
     void updateTessUniforms(WorldObject* wo);
+    void updateLineUniforms(WorldObject* wo);
 
-    void renderSimpleObjects(bool uniformUpdateRequired);
-    void renderQuads(bool uniformUpdateRequired);
+    void renderSimpleObjects();
+    void renderQuads();
+    void renderNormals();
     void renderWorld();
 
     // Simple shader program
@@ -65,6 +71,12 @@ private:
     GLuint tessVAO;
     GLuint tessCoordinatesBO, tessNormalsBO, tessModeBO;
     unsigned int tessIBOsize;
+
+    // Tessellation shader program
+    QOpenGLShaderProgram *lineShaderProgram;
+    GLuint lineVAO;
+    GLuint lineCoordinatesBO;
+    unsigned int lineIBOsize;
 };
 
 #endif // RENDERER_H

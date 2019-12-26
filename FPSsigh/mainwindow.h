@@ -50,6 +50,8 @@ private slots:
 
     void on_phase_valueChanged(double arg1);
 
+    void on_normalShader_stateChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
     GameLoopThread* gameLoopThread;

@@ -10,9 +10,10 @@ Renderer::Renderer()
       scale(1.0),
       enableSimpleShader(true),
       enableTessShader(true),
+      enableLineShader(false),
       tessellationInner(1),
       tessellationOuter(2),
-      tessIBOsize(0), simpleIBOsize(0),
+      tessIBOsize(0), simpleIBOsize(0), lineIBOsize(0),
       simpleWireframeMode(false), tessWireframeMode(false),
       bicubicInterpolation(false)
 {
@@ -50,22 +51,29 @@ Renderer::~Renderer()
     glDeleteBuffers(1, &tessNormalsBO);
 
     delete tessShaderProgram;
+
+    glDeleteBuffers(1, &lineCoordinatesBO);
+
+    delete lineShaderProgram;
 }
 
 void Renderer::createShaderPrograms() {
     createSimpleShaderProgram();
     createTessShaderProgram();
+    createLineShaderProgram();
 }
 
 void Renderer::createBuffers() {
     createSimpleBuffers();
     createTessBuffers();
+    createLineBuffers();
 }
 
 void Renderer::render() {
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    if (enableSimpleShader) { renderSimpleObjects(uniformUpdateRequired); }
-    if (enableTessShader) { renderQuads(uniformUpdateRequired); }
+    if (enableSimpleShader) { renderSimpleObjects(); }
+    if (enableTessShader) { renderQuads(); }
+    if (enableLineShader) { renderNormals(); }
 }

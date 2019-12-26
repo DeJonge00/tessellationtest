@@ -32,6 +32,7 @@ SOURCES += \
     logic/world_objects/worldobject.cpp \
     main.cpp \
     mainwindow.cpp \
+    rendering/linerenderer.cpp \
     rendering/renderer.cpp \
     rendering/simpleobjectspipeline.cpp \
     rendering/tessellationpipeline.cpp

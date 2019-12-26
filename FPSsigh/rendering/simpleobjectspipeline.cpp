@@ -2,7 +2,7 @@
 
 void Renderer::createSimpleShaderProgram() {
     simpleShaderProgram = new QOpenGLShaderProgram();
-    simpleShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/simple/rendering/shaders/simple_vs.glsl");
+    simpleShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/simple/rendering/shaders/vs.glsl");
     simpleShaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/simple/rendering/shaders/fs.glsl");
 
     simpleShaderProgram->link();
@@ -55,7 +55,7 @@ void Renderer::updateSimpleUniforms(WorldObject *wo) {
     }
 }
 
-void Renderer::renderSimpleObjects(bool uniformUpdateRequired) {
+void Renderer::renderSimpleObjects() {
     simpleShaderProgram->bind();
 
     glBindVertexArray(simpleVAO);

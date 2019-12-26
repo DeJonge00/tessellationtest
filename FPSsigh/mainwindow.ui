@@ -262,6 +262,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QCheckBox" name="normalShader">
+       <property name="text">
+        <string>Normal shader</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QSpinBox" name="tessInnerSpinbox">
        <property name="suffix">
         <string/>
@@ -493,7 +500,7 @@
      <x>0</x>
      <y>0</y>
      <width>1920</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

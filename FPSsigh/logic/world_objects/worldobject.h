@@ -20,6 +20,8 @@ public:
     QVector<QVector3D> getTessVertices();
     QVector<QVector3D> getTessNormals();
 
+    QVector<QVector3D> getNormals();
+
     void addFace(Face *f);
     void addVertex(Vertex *v);
     void addHalfedge(HalfEdge *h);
