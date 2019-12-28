@@ -39,15 +39,17 @@ void Renderer::updateLineUniforms(WorldObject *wo) {
     lineShaderProgram->setUniformValue("translation", wo->translation);
 }
 
-void Renderer::renderNormals() {
+void Renderer::renderNormals(QVector<Chunk *> chunks) {
     lineShaderProgram->bind();
 
     glBindVertexArray(lineVAO);
-    for (WorldObject* wo : gameWorld->worldObjects) {
-        updateLineBuffers(wo);
-        updateLineUniforms(wo);
+    for (Chunk* c : chunks) {
+        for (WorldObject* wo : c->getObjects()) {
+            updateLineBuffers(wo);
+            updateLineUniforms(wo);
 
-        glDrawArrays(GL_LINES, 0, lineIBOsize);
+            glDrawArrays(GL_LINES, 0, lineIBOsize);
+        }
     }
     glBindVertexArray(0);
     lineShaderProgram->release();

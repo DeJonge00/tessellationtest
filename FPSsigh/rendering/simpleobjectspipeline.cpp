@@ -55,26 +55,28 @@ void Renderer::updateSimpleUniforms(WorldObject *wo) {
     }
 }
 
-void Renderer::renderSimpleObjects() {
+void Renderer::renderSimpleObjects(QVector<Chunk *> chunks) {
     simpleShaderProgram->bind();
 
     glBindVertexArray(simpleVAO);
-    for (WorldObject* wo : gameWorld->worldObjects) {
-        updateSimpleBuffers(wo);
-        updateSimpleUniforms(wo);
+    for (Chunk* c : chunks) {
+        for (WorldObject* wo : c->getObjects()) {
+            updateSimpleBuffers(wo);
+            updateSimpleUniforms(wo);
 
-        // Draw triangles
-        if (simpleWireframeMode) {
-            glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-        } else {
-            glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
-        }
-        glDrawArrays(GL_TRIANGLES, 0, simpleIBOsize);
+            // Draw triangles
+            if (simpleWireframeMode) {
+                glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+            } else {
+                glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
+            }
+            glDrawArrays(GL_TRIANGLES, 0, simpleIBOsize);
 
-        // Draw vertices
-        if (false) {
-            glPointSize(12.0);
-            glDrawArrays(GL_POINTS, 0, simpleIBOsize);
+            // Draw vertices
+            if (false) {
+                glPointSize(12.0);
+                glDrawArrays(GL_POINTS, 0, simpleIBOsize);
+            }
         }
     }
     glBindVertexArray(0);

@@ -73,7 +73,11 @@ void Renderer::render() {
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    if (enableSimpleShader) { renderSimpleObjects(); }
-    if (enableTessShader) { renderQuads(); }
-    if (enableLineShader) { renderNormals(); }
+    // Decide on which chunks to render at all
+    // Based on range and in FoV
+    QVector<Chunk *> chunks = gameWorld->getChunks();
+
+    if (enableSimpleShader) { renderSimpleObjects(chunks); }
+    if (enableTessShader) { renderQuads(chunks); }
+    if (enableLineShader) { renderNormals(chunks); }
 }

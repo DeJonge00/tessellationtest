@@ -24,19 +24,20 @@ void World::loadScene(QString name) {
 }
 
 void World::initDefaultScene() {
-    worldObjects = QVector<WorldObject *>();
+    Chunk* chunk = new Chunk(QVector2D(0, 0), 15, 15);
+    chunks.append(chunk);
     loadScene("scene1");
 
     Floor* floor = new Floor(30, 30);
     floor->name = QString("Floor");
     floor->mode = RENDERMODE_BLAND;
-    worldObjects.append(floor);
+    chunk->addObject(floor);
 
     WorldObject* skybox = getLoadedObject("cube");
     skybox->name = QString("skybox");
     skybox->scale(15);
     skybox->mode = RENDERMODE_NORMAL;
-    worldObjects.append(skybox);
+    chunk->addObject(skybox);
 
     WorldObject* cube = getLoadedObject("opencube");
 //    cube->toLimitPositions();
@@ -46,20 +47,20 @@ void World::initDefaultScene() {
     cube->scale(1);
     cube->translate(QVector3D(-4, 2, -2));
     cube->mode = RENDERMODE_NORMAL;
-    worldObjects.append(cube);
+    chunk->addObject(cube);
 
     WorldObject* tower = getLoadedObject("tower");
 //    tower->toLimitPositions();
     tower->mode = RENDERMODE_NORMAL;
     tower->translate(QVector3D(1, 3, 0));
-    worldObjects.append(tower);
+    chunk->addObject(tower);
 
     RotatingObject* tower2 = new RotatingObject();
     getLoadedObject("tower")->copyOver(tower2);
 //    WorldObject* tower2 = getLoadedObject("tower");
     tower2->mode = RENDERMODE_NORMAL;
     tower2->translate(QVector3D(-1, 3, 0));
-    worldObjects.append(tower2);
+    chunk->addObject(tower2);
 
     WorldObject* sphere = getLoadedObject("sphere");
     sphere->mode = RENDERMODE_NORMAL;
@@ -67,7 +68,7 @@ void World::initDefaultScene() {
     sphere->phaseSpeed = 0.001;
     sphere->phaseStrength = 0.1;
     sphere->translate(QVector3D(-1, 1, -1));
-    worldObjects.append(sphere);
+    chunk->addObject(sphere);
 
 //    RotatingObject* monkey = new RotatingObject();
 //    qDebug() << "Monkey getloaded";
@@ -77,5 +78,5 @@ void World::initDefaultScene() {
     monkey->mode = RENDERMODE_NORMAL;
     monkey->scale(1.5);
     monkey->translate(QVector3D(7, 2, 2));
-    worldObjects.append(monkey);
+    chunk->addObject(monkey);
 }

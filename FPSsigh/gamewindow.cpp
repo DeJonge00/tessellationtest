@@ -6,7 +6,7 @@
 
 
 GameWindow::GameWindow(QWidget *Parent) : QOpenGLWidget(Parent),
-    mouseTracking(true), paused(false), running(false)
+    paused(false), running(false), mouseTracking(true)
 {
     setEnabled(true);
     switchMouseEnabled();

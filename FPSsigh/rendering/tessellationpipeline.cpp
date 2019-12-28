@@ -62,20 +62,22 @@ void Renderer::updateTessUniforms(WorldObject* wo) {
     }
 }
 
-void Renderer::renderQuads() {
+void Renderer::renderQuads(QVector<Chunk *> chunks) {
     tessShaderProgram->bind();
 
     glBindVertexArray(tessVAO);
-    for (WorldObject* wo : gameWorld->worldObjects) {
-        updateTessBuffers(wo);
-        updateTessUniforms(wo);
+    for (Chunk* c : chunks) {
+        for (WorldObject* wo : c->getObjects()) {
+            updateTessBuffers(wo);
+            updateTessUniforms(wo);
 
-        if (tessWireframeMode) {
-            glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-        } else {
-            glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
+            if (tessWireframeMode) {
+                glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+            } else {
+                glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
+            }
+            glDrawArrays(GL_PATCHES, 0, tessIBOsize);
         }
-        glDrawArrays(GL_PATCHES, 0, tessIBOsize);
     }
     glBindVertexArray(0);
     tessShaderProgram->release();

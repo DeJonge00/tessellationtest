@@ -21,11 +21,11 @@ SOURCES += \
     logic/world_objects/bullet.cpp \
     logic/loading/objectloader.cpp \
     logic/character.cpp \
-    logic/chunk.cpp \
     logic/fpscounter.cpp \
     logic/gameloopthread.cpp \
     logic/loading/initscenes.cpp \
     logic/world.cpp \
+    logic/world_objects/chunk.cpp \
     logic/world_objects/floor.cpp \
     logic/world_objects/phasedobject.cpp \
     logic/world_objects/rotatingobject.cpp \
@@ -42,13 +42,13 @@ HEADERS += \
     gamewindow.h \
     logic/world_objects/bullet.h \
     logic/character.h \
-    logic/chunk.h \
     logic/object_structs/face.h \
     logic/fpscounter.h \
     logic/gameloopthread.h \
     logic/object_structs/halfedge.h \
     logic/object_structs/vertex.h \
     logic/world.h \
+    logic/world_objects/chunk.h \
     logic/world_objects/floor.h \
     logic/world_objects/phasedobject.h \
     logic/world_objects/rotatingobject.h \

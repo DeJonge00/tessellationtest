@@ -55,10 +55,9 @@ private:
     void updateTessUniforms(WorldObject* wo);
     void updateLineUniforms(WorldObject* wo);
 
-    void renderSimpleObjects();
-    void renderQuads();
-    void renderNormals();
-    void renderWorld();
+    void renderSimpleObjects(QVector<Chunk *> chunks);
+    void renderQuads(QVector<Chunk *> chunks);
+    void renderNormals(QVector<Chunk *> chunks);
 
     // Simple shader program
     QOpenGLShaderProgram *simpleShaderProgram;

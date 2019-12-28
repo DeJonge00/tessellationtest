@@ -2,8 +2,7 @@
 #include "math.h"
 
 GameLoopThread::GameLoopThread(MainWindow* mw, GameWindow *gw)
-    : ui(mw), gameWindow(gw), fpsCounter(new FPScounter()),
-      maxFps(330)
+    : maxFps(330), ui(mw), gameWindow(gw), fpsCounter(new FPScounter())
 {
 
 }
