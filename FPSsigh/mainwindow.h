@@ -52,6 +52,8 @@ private slots:
 
     void on_normalShader_stateChanged(int arg1);
 
+    void on_chunkBoundary_stateChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
     GameLoopThread* gameLoopThread;

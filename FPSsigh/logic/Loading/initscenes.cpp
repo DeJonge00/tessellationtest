@@ -24,20 +24,38 @@ void World::loadScene(QString name) {
 }
 
 void World::initDefaultScene() {
-    Chunk* chunk = new Chunk(QVector2D(0, 0), 15, 15);
-    chunks.append(chunk);
+    int chunks_x = 3, chunks_z = 3;
+    float width = 10, length = 10;
+    float start_x = -15, start_z = -15;
+    for (int z = 0; z < chunks_z; z++) {
+        for (int x = 0; x < chunks_x; x++) {
+            Chunk* c = new Chunk(QVector2D(start_x + x*width, start_z + z*length), width, length);
+            chunks.append(c);
+            if (z > 0) {
+                Chunk* e = chunks[(z-1)*chunks_z + x];
+                e->setWestChunk(c);
+                c->setEastChunk(e);
+            }
+            if (x > 0) {
+                Chunk* s = chunks[z*chunks_z + x-1];
+                s->setNorthChunk(c);
+                c->setSouthChunk(s);
+            }
+        }
+    }
+
     loadScene("scene1");
 
     Floor* floor = new Floor(30, 30);
     floor->name = QString("Floor");
     floor->mode = RENDERMODE_BLAND;
-    chunk->addObject(floor);
+    chunks.first()->addObject(floor);
 
     WorldObject* skybox = getLoadedObject("cube");
     skybox->name = QString("skybox");
     skybox->scale(15);
     skybox->mode = RENDERMODE_NORMAL;
-    chunk->addObject(skybox);
+    chunks.first()->addObject(skybox);
 
     WorldObject* cube = getLoadedObject("opencube");
 //    cube->toLimitPositions();
@@ -47,20 +65,20 @@ void World::initDefaultScene() {
     cube->scale(1);
     cube->translate(QVector3D(-4, 2, -2));
     cube->mode = RENDERMODE_NORMAL;
-    chunk->addObject(cube);
+    chunks.first()->addObject(cube);
 
     WorldObject* tower = getLoadedObject("tower");
 //    tower->toLimitPositions();
     tower->mode = RENDERMODE_NORMAL;
     tower->translate(QVector3D(1, 3, 0));
-    chunk->addObject(tower);
+    chunks.first()->addObject(tower);
 
     RotatingObject* tower2 = new RotatingObject();
     getLoadedObject("tower")->copyOver(tower2);
 //    WorldObject* tower2 = getLoadedObject("tower");
     tower2->mode = RENDERMODE_NORMAL;
     tower2->translate(QVector3D(-1, 3, 0));
-    chunk->addObject(tower2);
+    chunks.first()->addObject(tower2);
 
     WorldObject* sphere = getLoadedObject("sphere");
     sphere->mode = RENDERMODE_NORMAL;
@@ -68,7 +86,7 @@ void World::initDefaultScene() {
     sphere->phaseSpeed = 0.001;
     sphere->phaseStrength = 0.1;
     sphere->translate(QVector3D(-1, 1, -1));
-    chunk->addObject(sphere);
+    chunks.first()->addObject(sphere);
 
 //    RotatingObject* monkey = new RotatingObject();
 //    qDebug() << "Monkey getloaded";
@@ -78,5 +96,5 @@ void World::initDefaultScene() {
     monkey->mode = RENDERMODE_NORMAL;
     monkey->scale(1.5);
     monkey->translate(QVector3D(7, 2, 2));
-    chunk->addObject(monkey);
+    chunks.first()->addObject(monkey);
 }

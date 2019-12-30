@@ -132,3 +132,8 @@ void MainWindow::on_phase_valueChanged(double arg1)
 {
 
 }
+
+void MainWindow::on_chunkBoundary_stateChanged(int value)
+{
+    ui->GameWidget->gameRenderer->enableChunkBoundaryShader = value == 2;
+}

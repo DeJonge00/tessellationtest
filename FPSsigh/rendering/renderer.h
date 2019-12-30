@@ -27,6 +27,7 @@ public:
     bool enableSimpleShader;
     bool enableLineShader;
     bool enableTessShader;
+    bool enableChunkBoundaryShader;
 
     int tessellationInner;
     int tessellationOuter;
@@ -50,14 +51,17 @@ private:
     void updateSimpleBuffers(WorldObject* wo);
     void updateTessBuffers(WorldObject* wo);
     void updateLineBuffers(WorldObject* wo);
+    void updateLineBuffers(QVector<QVector3D> vs);
 
     void updateSimpleUniforms(WorldObject* wo);
     void updateTessUniforms(WorldObject* wo);
     void updateLineUniforms(WorldObject* wo);
+    void updateLineUniforms();
 
     void renderSimpleObjects(QVector<Chunk *> chunks);
     void renderQuads(QVector<Chunk *> chunks);
     void renderNormals(QVector<Chunk *> chunks);
+    void renderChunkBoundary(QVector<Chunk *> chunks);
 
     // Simple shader program
     QOpenGLShaderProgram *simpleShaderProgram;

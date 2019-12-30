@@ -20,16 +20,20 @@ void Chunk::autoMoveObject(WorldObject* wo) {
     QVector3D obj_origin = wo->translation;
     Chunk* c = this;
     if (obj_origin.x() < origin.x()) {
-        c = northChunk;
+        c = southChunk;
+        qDebug() << "Moving" << wo->name << "north";
     }
     if (obj_origin.x() >= (origin.x() + width)) {
-        c = southChunk;
+        c = northChunk;
+        qDebug() << "Moving" << wo->name << "south";
     }
-    if (obj_origin.y() < origin.y()) {
-        c = westChunk;
-    }
-    if (obj_origin.y() >= (origin.y() + length)) {
+    if (obj_origin.z() < origin.y()) {
         c = eastChunk;
+        qDebug() << "Moving" << wo->name << "west";
+    }
+    if (obj_origin.z() >= (origin.y() + length)) {
+        c = westChunk;
+        qDebug() << "Moving" << wo->name << "east";
     }
     if (c != this) {
         moveObject(c, wo);
@@ -38,5 +42,29 @@ void Chunk::autoMoveObject(WorldObject* wo) {
 
 float Chunk::manhattanDistanceTo(QVector3D p) {
     return fmin(p.x() - origin.x(), p.x() - (origin.x() + width))
-            + fmin(p.y() - origin.y(), p.y() - (origin.y() + length));
+            + fmin(p.z() - origin.y(), p.z() - (origin.y() + length));
+}
+
+QVector<QVector3D> Chunk::getVisualBoundary(float h) {
+    h -= 2;
+    QVector<QVector3D> boundary_coords = QVector<QVector3D>();
+    boundary_coords.append(QVector3D(0, h, 0));
+    boundary_coords.append(QVector3D(width, h, 0));
+
+    boundary_coords.append(QVector3D(width, h, 0));
+    boundary_coords.append(QVector3D(width, h, length));
+
+    boundary_coords.append(QVector3D(width, h, length));
+    boundary_coords.append(QVector3D(0, h, length));
+
+    boundary_coords.append(QVector3D(0, h, length));
+    boundary_coords.append(QVector3D(0, h, 0));
+    for (QVector3D c : boundary_coords) {
+        boundary_coords.append(c + QVector3D(0, 0.5, 0));
+    }
+    return boundary_coords;
+}
+
+QVector3D Chunk::getOrigin() {
+    return QVector3D(origin.x(), 0, origin.y());
 }

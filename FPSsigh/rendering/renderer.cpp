@@ -11,6 +11,7 @@ Renderer::Renderer()
       enableSimpleShader(true),
       enableTessShader(true),
       enableLineShader(false),
+      enableChunkBoundaryShader(false),
       tessellationInner(1),
       tessellationOuter(2),
       tessIBOsize(0), simpleIBOsize(0), lineIBOsize(0),
@@ -80,4 +81,5 @@ void Renderer::render() {
     if (enableSimpleShader) { renderSimpleObjects(chunks); }
     if (enableTessShader) { renderQuads(chunks); }
     if (enableLineShader) { renderNormals(chunks); }
+    if (enableChunkBoundaryShader) { renderChunkBoundary(chunks); }
 }

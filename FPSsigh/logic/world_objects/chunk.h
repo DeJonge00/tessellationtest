@@ -12,10 +12,20 @@ public:
     Chunk() : Chunk(QVector2D(0, 0), 1, 1) {}
 
     QVector<WorldObject *> getObjects() { return worldObjects; }
-    void addObject(WorldObject* worldObject) { worldObjects.append(worldObject); }
+    void addObject(WorldObject* worldObject) {
+        worldObjects.append(worldObject);
+        autoMoveObject(worldObject);
+    }
     void moveObject(Chunk* chunk, WorldObject* worldObject);
     void autoMoveObject(WorldObject* wo);
     float manhattanDistanceTo(QVector3D position);
+    QVector<QVector3D> getVisualBoundary(float h);
+    QVector3D getOrigin();
+
+    void setNorthChunk(Chunk* c) { northChunk = c; }
+    void setEastChunk(Chunk* c) { eastChunk = c; }
+    void setSouthChunk(Chunk* c) { southChunk = c; }
+    void setWestChunk(Chunk* c) { westChunk = c; }
 private:
     QVector<WorldObject *> worldObjects;
     Chunk* northChunk;

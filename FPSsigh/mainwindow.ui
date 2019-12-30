@@ -51,7 +51,7 @@
       <x>10</x>
       <y>40</y>
       <width>261</width>
-      <height>671</height>
+      <height>682</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -265,6 +265,13 @@
       <widget class="QCheckBox" name="normalShader">
        <property name="text">
         <string>Normal shader</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="chunkBoundary">
+       <property name="text">
+        <string>Chunk boundary shader</string>
        </property>
       </widget>
      </item>
