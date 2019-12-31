@@ -76,7 +76,7 @@ void Renderer::render() {
 
     // Decide on which chunks to render at all
     // Based on range and in FoV
-    QVector<Chunk *> chunks = gameWorld->getChunks();
+    QVector<Chunk *> chunks = gameWorld->getChunks(gameCharacter);
 
     if (enableSimpleShader) { renderSimpleObjects(chunks); }
     if (enableTessShader) { renderQuads(chunks); }

@@ -11,6 +11,7 @@
 #include "logic/object_structs/vertex.h"
 #include "logic/object_structs/halfedge.h"
 #include "logic/object_structs/face.h"
+#include "character.h"
 
 
 class World
@@ -19,22 +20,20 @@ public:
     World();
 
     QString objectPath;
-    // initscenes
-    void loadScene(QString name);
     void initDefaultScene();
-
-    // character
-//    void addCharacterObjects();
     void addBullet(QVector3D location, float angleSide, float angleUp);
 
     void updateWorld(long long time);
     WorldObject* getLoadedObject(QString name);
     void loadObject(QString dir_name, QString name);
-    QVector<Chunk *> getChunks() { return chunks; }
+    QVector<Chunk *> getChunks(Character* cha);
 
 private:
     QVector<Chunk *> chunks;
     QVector<WorldObject *> loadedWorldObjects;
+    void loadScene(QString name);
+    void initChunks();
+
     WorldObject* objectLoader(QString fileName, QString name);
     inline WorldObject* objectLoader(QString fileName) { return objectLoader(fileName, "Object"); };
 };

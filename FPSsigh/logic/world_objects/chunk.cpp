@@ -41,12 +41,12 @@ void Chunk::autoMoveObject(WorldObject* wo) {
 }
 
 float Chunk::manhattanDistanceTo(QVector3D p) {
-    return fmin(p.x() - origin.x(), p.x() - (origin.x() + width))
-            + fmin(p.z() - origin.y(), p.z() - (origin.y() + length));
+    return fmin(abs(origin.x() - p.x()), abs((origin.x() + width) - p.x()))
+            + fmin(abs(origin.y() - p.z()), abs((origin.y() + length) - p.y()));
 }
 
 QVector<QVector3D> Chunk::getVisualBoundary(float h) {
-    h -= 2;
+    h -= 12;
     QVector<QVector3D> boundary_coords = QVector<QVector3D>();
     boundary_coords.append(QVector3D(0, h, 0));
     boundary_coords.append(QVector3D(width, h, 0));
@@ -60,7 +60,7 @@ QVector<QVector3D> Chunk::getVisualBoundary(float h) {
     boundary_coords.append(QVector3D(0, h, length));
     boundary_coords.append(QVector3D(0, h, 0));
     for (QVector3D c : boundary_coords) {
-        boundary_coords.append(c + QVector3D(0, 0.5, 0));
+        boundary_coords.append(c + QVector3D(0, -2, 0));
     }
     return boundary_coords;
 }

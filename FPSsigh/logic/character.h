@@ -43,6 +43,7 @@ public:
     void positionDown(float n);
 
     void update(float scale);
+    QVector3D getDirection();
 
 protected:
 private:
@@ -59,7 +60,6 @@ private:
 
     QPoint lastMousePosition;
 
-    QVector3D getDirection();
     QVector3D getDirectionSide();
 
     void updateModelMatrix();

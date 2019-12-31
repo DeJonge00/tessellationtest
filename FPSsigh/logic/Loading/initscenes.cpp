@@ -23,10 +23,10 @@ void World::loadScene(QString name) {
     }
 }
 
-void World::initDefaultScene() {
-    int chunks_x = 3, chunks_z = 3;
+void World::initChunks() {
+    int chunks_x = 100, chunks_z = 100;
     float width = 10, length = 10;
-    float start_x = -15, start_z = -15;
+    float start_x = -50, start_z = -50;
     for (int z = 0; z < chunks_z; z++) {
         for (int x = 0; x < chunks_x; x++) {
             Chunk* c = new Chunk(QVector2D(start_x + x*width, start_z + z*length), width, length);
@@ -43,7 +43,10 @@ void World::initDefaultScene() {
             }
         }
     }
+}
 
+void World::initDefaultScene() {
+    initChunks();
     loadScene("scene1");
 
     Floor* floor = new Floor(30, 30);
@@ -57,15 +60,14 @@ void World::initDefaultScene() {
     skybox->mode = RENDERMODE_NORMAL;
     chunks.first()->addObject(skybox);
 
-    WorldObject* cube = getLoadedObject("opencube");
-//    cube->toLimitPositions();
-    cube->phaseType = PHASETYPE_BEATING;
-    cube->phaseSpeed = 0.01;
-    cube->phaseStrength = 0.1;
-    cube->scale(1);
-    cube->translate(QVector3D(-4, 2, -2));
-    cube->mode = RENDERMODE_NORMAL;
-    chunks.first()->addObject(cube);
+//    WorldObject* cube = getLoadedObject("opencube");
+//    cube->phaseType = PHASETYPE_BEATING;
+//    cube->phaseSpeed = 0.01;
+//    cube->phaseStrength = 0.1;
+//    cube->scale(1);
+//    cube->translate(QVector3D(-4, 2, -2));
+//    cube->mode = RENDERMODE_NORMAL;
+//    chunks.first()->addObject(cube);
 
     WorldObject* tower = getLoadedObject("tower");
 //    tower->toLimitPositions();
@@ -89,12 +91,10 @@ void World::initDefaultScene() {
     chunks.first()->addObject(sphere);
 
 //    RotatingObject* monkey = new RotatingObject();
-//    qDebug() << "Monkey getloaded";
 //    getLoadedObject("monkey")->copyOver(monkey);
-//    qDebug() << "Monkey loaded";
-    WorldObject* monkey = getLoadedObject("monkey");
-    monkey->mode = RENDERMODE_NORMAL;
-    monkey->scale(1.5);
-    monkey->translate(QVector3D(7, 2, 2));
-    chunks.first()->addObject(monkey);
+//    WorldObject* monkey = getLoadedObject("monkey");
+//    monkey->mode = RENDERMODE_NORMAL;
+//    monkey->scale(1.5);
+//    monkey->translate(QVector3D(7, 2, 2));
+//    chunks.first()->addObject(monkey);
 }

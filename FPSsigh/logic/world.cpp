@@ -23,3 +23,26 @@ void World::updateWorld(long long time) {
         }
     }
 }
+
+bool inSight(Chunk* chunk, Character* character) {
+    if (chunk->manhattanDistanceTo(character->position) > 30) {
+        return false;
+    }
+
+    qDebug() << character->getDirection();
+    if (QVector3D::dotProduct((character->position - chunk->getOrigin()).normalized(),
+                              character->getDirection()) < 0) {
+        return false;
+    }
+    return true;
+}
+
+QVector<Chunk *> World::getChunks(Character* cha) {
+    QVector<Chunk *> cs = QVector<Chunk *>();
+    for (Chunk *c : chunks) {
+        if (inSight(c, cha)) {
+            cs.append(c);
+        }
+    }
+    return cs;
+}
