@@ -8,7 +8,7 @@ World::World()
       chunks(QVector<Chunk *>()),
       loadedWorldObjects(QVector<WorldObject *>())
 {
-    initDefaultScene();
+    initSphereScene();
 
     // Load non-scene objects
     loadObject("character", "bullet");

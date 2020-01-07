@@ -21,6 +21,7 @@ public:
 
     QString objectPath;
     void initDefaultScene();
+    void initSphereScene();
     void addBullet(QVector3D location, float angleSide, float angleUp);
 
     void updateWorld(long long time);

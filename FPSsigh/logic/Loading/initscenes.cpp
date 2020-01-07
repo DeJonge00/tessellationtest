@@ -45,6 +45,24 @@ void World::initChunks() {
     }
 }
 
+void World::initSphereScene() {
+    initChunks();
+    loadScene("scene1");
+
+    WorldObject* sphere = getLoadedObject("sphere");
+    sphere->mode = RENDERMODE_NORMAL;
+    sphere->phaseType = PHASETYPE_HOVER;
+    sphere->phaseSpeed = 0.001;
+    sphere->phaseStrength = 0.1;
+    sphere->translate(QVector3D(0, 2, -2));
+    chunks.first()->addObject(sphere);
+
+    WorldObject* tower = getLoadedObject("tower");
+    tower->mode = RENDERMODE_NORMAL;
+    tower->translate(QVector3D(2, 2, -2));
+    chunks.first()->addObject(tower);
+}
+
 void World::initDefaultScene() {
     initChunks();
     loadScene("scene1");
